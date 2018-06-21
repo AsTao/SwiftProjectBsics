@@ -30,13 +30,13 @@ public protocol HttpResponseHandle{
     
 }
 
-public class HttpClient: NSObject {
+open class HttpClient: NSObject {
 
     public var strategy :HttpStrategy?
     public var responseHandle :HttpResponseHandle?
     private var dataRequest :DataRequest?
     
-    public func request(){
+    open func request(){
         guard let s = strategy  else {return;}
         self.dataRequest?.cancel()
         let url = AppConfig.assembleServerUrl(url: s.url)

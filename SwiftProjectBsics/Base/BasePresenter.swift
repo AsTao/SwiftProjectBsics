@@ -13,7 +13,7 @@ protocol BasePresenterProtocol {
     func willUnbind()
 }
 
-public class BasePresenter: NSObject,BasePresenterProtocol {
+open class BasePresenter: NSObject,BasePresenterProtocol {
     private(set) var view : UIView!{
         didSet{self.didBind()}
     }

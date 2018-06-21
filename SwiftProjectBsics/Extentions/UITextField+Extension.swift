@@ -92,7 +92,7 @@ extension UITextField{
     }
     
     @discardableResult
-    func textFieldRightButton(name :String, target: Any? = nil, action: Selector? = nil) -> UILabel{
+    public func textFieldRightButton(name :String, target: Any? = nil, action: Selector? = nil) -> UILabel{
         
         let labelWidth :CGFloat = 73 + 32
         let view = UIControl(frame: CGRect(x: 0, y: 0, width: labelWidth, height: self.height))

@@ -18,7 +18,7 @@ public enum HttpPresenterMode {
 
 typealias RequestCompletedHandle = ([String:Any],Int) -> Void
 
-public class HttpPresenter: BasePresenter,HttpResponseHandle {
+open class HttpPresenter: BasePresenter,HttpResponseHandle {
     
     public var httpClient :HttpClient = HttpClient()
     public var mode :HttpPresenterMode = .def
@@ -43,7 +43,7 @@ public class HttpPresenter: BasePresenter,HttpResponseHandle {
         return view
     }()
     
-    @objc func refreshRequest(){
+    @objc open func refreshRequest(){
         self.httpClient.request()
     }
 
@@ -51,7 +51,7 @@ public class HttpPresenter: BasePresenter,HttpResponseHandle {
 
 extension HttpPresenter{
     @discardableResult
-    public func request(url :String, parameters :[String :Any] = [:], method :HTTPMethod = .post) -> Self{
+    open func request(url :String, parameters :[String :Any] = [:], method :HTTPMethod = .post) -> Self{
         if self.mode != .sil, self.viewController != nil {
             self.statusView.show(inView:self.viewController.view, mode: .loading)
         }
@@ -64,7 +64,7 @@ extension HttpPresenter{
         return self
     }
     @discardableResult
-    public func request(strategy :BaseHttpStrategy) -> Self{
+    open func request(strategy :BaseHttpStrategy) -> Self{
         if self.mode != .sil, self.viewController != nil {
             self.statusView.show(inView:self.viewController.view, mode: .loading)
         }
@@ -73,7 +73,7 @@ extension HttpPresenter{
         return self
     }
     @discardableResult
-    public func responseObject<T :Decodable>(completionHandler: @escaping (HttpDataResponse<T>) -> Void ) -> Self{
+    open func responseObject<T :Decodable>(completionHandler: @escaping (HttpDataResponse<T>) -> Void ) -> Self{
         
         self.requestCompleted = {
             [weak self]
@@ -81,7 +81,6 @@ extension HttpPresenter{
 
             var object :T?
             if statusCode == 200, let responseData = response["data"] as? [String:Any]{
-                print(responseData["mobileNo"])
                 do {
                     let data = try JSONSerialization.data(withJSONObject: responseData, options: .prettyPrinted)
                     let decoder = JSONDecoder()
