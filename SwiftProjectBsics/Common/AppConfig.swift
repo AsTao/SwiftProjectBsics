@@ -36,6 +36,7 @@ public class AppConfig: NSObject {
     public var server_url :String = ""
     public var server_file_url :String = ""
     
+    public var navigationTitleColor :UIColor = UIColor.white
     
     private func ini(){
         self.uuid = getUuid()

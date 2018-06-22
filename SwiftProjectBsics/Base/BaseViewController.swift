@@ -35,13 +35,14 @@ open class BaseViewController<T :BasePresenter> : UIViewController {
         httpPresenter.unbind()
     }
     
+    public var navigationTitleColor :UIColor?
     public var navtitle :String = ""{
         didSet{
             let w = navtitle.compatibleSizeWithFont(UIFont.systemFont(ofSize: 18), width: _SW-100).width + 20
             let label = UILabel(frame: CGRect(x: 0,y: 0,width: w,height: 30))
             label.textAlignment = .center
             label.font = UIFont(name: "STHeitiK-Medium", size: 16)
-            label.textColor = UIColor.white
+            label.textColor = navigationTitleColor ?? AppConfig.shared.navigationTitleColor
             label.text = navtitle
             self.navigationItem.titleView = label
         }

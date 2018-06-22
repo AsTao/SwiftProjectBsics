@@ -107,6 +107,19 @@ extension HttpPresenter{
         return self
     }
     
+    open func responseOriginalJson(completionHandler: @escaping ([String:Any]) -> Void ) -> Self{
+        
+        self.requestCompleted = {
+            [weak self]
+            response,statusCode in
+            debugPrint(statusCode)
+            self?.statusView.remove()
+            completionHandler(response)
+            
+        }
+        return self
+    }
+    
     
     public func didSuccess(response :[String:Any], statusCode :Int){
         self.requestCompleted?(response,statusCode)

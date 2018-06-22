@@ -117,4 +117,11 @@ extension UITextField{
         }
         return label
     }
+    
+    public func addTextFieldLeftSpace(_ width :CGFloat = 10){
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: width, height: self.height))
+        view.backgroundColor =  self.backgroundColor
+        self.leftView = view
+        self.leftViewMode = .always
+    }
 }
