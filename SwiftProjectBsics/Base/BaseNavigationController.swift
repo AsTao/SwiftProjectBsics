@@ -7,9 +7,9 @@
 
 import UIKit
 
-public class BaseNavigationController: UINavigationController {
+open class BaseNavigationController: UINavigationController {
 
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         if let image = self.navigationBarBackgroundImage(){
             self.setNavigationBarImage(image)
@@ -25,23 +25,23 @@ public class BaseNavigationController: UINavigationController {
         self.navigationBar.setBackgroundImage(newImage, for: .top, barMetrics: .default)
     }
 
-    override public func pushViewController(_ viewController: UIViewController, animated: Bool) {
+    override open func pushViewController(_ viewController: UIViewController, animated: Bool) {
         viewController.hidesBottomBarWhenPushed = viewControllers.count > 0
         super.pushViewController(viewController, animated: animated)
     }
     
-    override public func popViewController(animated: Bool) -> UIViewController? {
+    override open func popViewController(animated: Bool) -> UIViewController? {
         if viewControllers.count == 1 {
             viewControllers[0].hidesBottomBarWhenPushed = false
         }
         return super.popViewController(animated: animated)
     }
     
-    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
     
-    override public var preferredStatusBarStyle: UIStatusBarStyle{
+    override open var preferredStatusBarStyle: UIStatusBarStyle{
         return .lightContent
     }
     
