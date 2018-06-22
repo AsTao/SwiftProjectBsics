@@ -14,22 +14,22 @@ protocol BasePresenterProtocol {
 }
 
 open class BasePresenter: NSObject,BasePresenterProtocol {
-    private(set) var view : UIView!{
+    
+    required public override init() {
+        super.init()
+    }
+    private var _viewController :UIViewController?{
         didSet{self.didBind()}
     }
-    private(set) var viewController : UIViewController!{
-        didSet{self.didBind()}
-    }
-    public func bindView(view :UIView){
-        self.view = view;
+    public var viewController : UIViewController?{
+        get{return _viewController}
     }
     public func bindViewController(viewController :UIViewController){
-        self.viewController = viewController
+        self._viewController = viewController
     }
     public func unbind(){
         self.willUnbind()
-        self.view = nil
-        self.viewController = nil
+        self._viewController = nil
     }
     open func didBind(){}
     open func willUnbind(){}

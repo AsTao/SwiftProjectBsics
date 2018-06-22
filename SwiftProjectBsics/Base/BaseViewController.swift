@@ -8,9 +8,9 @@
 
 import UIKit
 
-open class BaseViewController: UIViewController {
+open class BaseViewController<T :BasePresenter> : UIViewController {
 
-    public var httpPresenter :HttpPresenter = HttpPresenter()
+    open var httpPresenter :T = T()
     
     override open func viewDidLoad() {
         super.viewDidLoad()

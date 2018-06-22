@@ -23,12 +23,11 @@ open class HttpPresenter: BasePresenter,HttpResponseHandle {
     public var httpClient :HttpClient = HttpClient()
     public var mode :HttpPresenterMode = .def
     
-    override init() {
+    required public init() {
         super.init()
         self.httpClient.responseHandle = self
         self.httpClient.strategy = BaseHttpStrategy()
     }
-    
     
     public var statusView :HttpStatusView{
         get{
@@ -53,7 +52,7 @@ extension HttpPresenter{
     @discardableResult
     open func request(url :String, parameters :[String :Any] = [:], method :HTTPMethod = .post) -> Self{
         if self.mode != .sil, self.viewController != nil {
-            self.statusView.show(inView:self.viewController.view, mode: .loading)
+            self.statusView.show(inView:self.viewController?.view, mode: .loading)
         }
         self.httpClient.strategy?.url = url
         self.httpClient.strategy?.parameters = parameters
@@ -66,7 +65,7 @@ extension HttpPresenter{
     @discardableResult
     open func request(strategy :BaseHttpStrategy) -> Self{
         if self.mode != .sil, self.viewController != nil {
-            self.statusView.show(inView:self.viewController.view, mode: .loading)
+            self.statusView.show(inView:self.viewController?.view, mode: .loading)
         }
         self.httpClient.strategy = strategy
         self.httpClient.request()
@@ -114,12 +113,12 @@ extension HttpPresenter{
     }
     
     public func didFail(response :Any?, statusCode :Int, error :Error?){
-        self.statusView.show(inView: self.viewController.view, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: safeString(response))
+        self.statusView.show(inView: self.viewController?.view, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: safeString(response))
     }
     
     open func requestFail(message :String){
         if mode == .def {
-            self.statusView.show(inView: self.viewController.view, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: message)
+            self.statusView.show(inView: self.viewController?.view, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: message)
         } else if mode == .qui {
             AppDelegateInstance.window?.makeToast(message)
         }

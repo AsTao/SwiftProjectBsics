@@ -45,11 +45,11 @@ public class BaseNavigationController: UINavigationController {
         return .lightContent
     }
     
-    public func navigationBarTintColor() -> UIColor{
+    open func navigationBarTintColor() -> UIColor{
         return UIColor.lightGray
     }
 
-    public func navigationBarBackgroundImage() -> UIImage?{
+    open func navigationBarBackgroundImage() -> UIImage?{
         return UIImage.libBundleImage("nav_background")
     }
 }

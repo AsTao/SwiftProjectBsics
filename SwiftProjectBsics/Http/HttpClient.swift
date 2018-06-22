@@ -37,7 +37,7 @@ open class HttpClient: NSObject {
     private var dataRequest :DataRequest?
     
     open func request(){
-        guard let s = strategy  else {return;}
+        guard let s = strategy else {return;}
         self.dataRequest?.cancel()
         let url = AppConfig.assembleServerUrl(url: s.url)
         debugPrint(url)

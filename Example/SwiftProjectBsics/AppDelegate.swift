@@ -19,14 +19,7 @@ class AppDelegate: BaseAppDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         AppConfig.shared.startNetworkListening()
-        AppConfig.shared.server_url = "http://39.108.9.243:8081"
-        
-        AppConfig.shared.sign = ["versionName":AppConfig.shared.version,
-                                 "versionCode":AppConfig.shared.bundleVersion,
-                                 "imei":AppConfig.shared.uuid,
-                                 "sid":"",
-                                 "city":"福州".urlEncoded,
-                                 "terminal":"2"]
+
         
         
         return true

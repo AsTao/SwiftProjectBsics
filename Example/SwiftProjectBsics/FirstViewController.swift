@@ -13,25 +13,20 @@ import CryptoSwift
 
 
 
-class FirstViewController: BaseViewController {
+class FirstViewController: BaseViewController<LoginPresenter> {
 
+  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
+    
+        
     }
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.httpPresenter.request(url: "",
-                                   parameters: [:])
-            .responseObject { (response: HttpDataResponse<ObjectModel>) in
-                
-                print(response.data?.mobileNo)
-
-                
-                
-        }
+        print(self.httpPresenter.viewController)
+        self.httpPresenter.login()
     }
 
 

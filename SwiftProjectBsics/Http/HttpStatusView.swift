@@ -46,17 +46,18 @@ public class HttpStatusView: UIControl {
             self.serverMessageLabel.height = serverMessage.compatibleSizeFont(serverMessageLabel.font, width: self.width - 40).height
         }
     }
-    public func show(inView view :UIView, mode :HttpStatusViewDisplayMode, msg :String = "", note :String = "", animate :Bool = true){
+    public func show(inView view :UIView?, mode :HttpStatusViewDisplayMode, msg :String = "", note :String = "", animate :Bool = true){
+        guard  let sview = view else {return}
         self.message = msg
         self.serverMessage = note
         if self.viewMode == mode && self.superview != nil {
             return
         }
-        view.endEditing(true)
+        sview.endEditing(true)
         self.removeFromSuperview()
-        self.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
+        self.frame = CGRect(x: 0, y: 0, width: sview.width, height: sview.height)
         self.viewMode = mode
-        view.addSubview(self)
+        sview.addSubview(self)
         self.alpha = 0
         if animate {
             UIView.animate(withDuration: 0.25) {
