@@ -19,7 +19,7 @@ public class HttpStatusView: UIControl {
         didSet{
             guard let mode = viewMode  else {return }
             switch mode {
-            case .noData:
+            case .loading:
                 self.indicatorView.isHidden = false
                 self.indicatorView.startAnimating()
                 self.logoImageView.image = nil
@@ -27,7 +27,7 @@ public class HttpStatusView: UIControl {
                 self.indicatorView.isHidden = true
                 self.indicatorView.stopAnimating()
                 self.logoImageView.image = UIImage.libBundleImage("project_fail")
-            case .loading:
+            case .noData:
                 self.indicatorView.isHidden = true
                 self.indicatorView.stopAnimating()
                 self.logoImageView.image = UIImage.libBundleImage("project_nodata")

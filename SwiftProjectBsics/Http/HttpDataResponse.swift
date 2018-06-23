@@ -9,7 +9,9 @@ import UIKit
 
 public struct HttpDataResponse<Value>  {
     
+    
     public var data :Value?
+    public var statusCode :Int
     public var result : String //failure  //success
     public var messages :[String]
     public var exceptionType :String
