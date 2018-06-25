@@ -15,7 +15,7 @@ public enum NetworkStatus {
     case wwan
 }
 
-
+public typealias GlobalFailedRequestCallback = (Int,String) -> Void
 public class AppConfig: NSObject {
     
     public static let shared : AppConfig = {
@@ -37,6 +37,8 @@ public class AppConfig: NSObject {
     public var server_file_url :String = ""
     
     public var navigationTitleColor :UIColor = UIColor.white
+    
+    public var unifyProcessingFailed :GlobalFailedRequestCallback?
     
     private func ini(){
         self.uuid = getUuid()

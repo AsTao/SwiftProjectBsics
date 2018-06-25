@@ -16,8 +16,8 @@ public enum HttpPresenterMode {
 }
 
 
-typealias RequestCompletedHandle = ([String:Any],Int) -> Void
-typealias RequestFailedHandle = (Int,String) -> Void
+public typealias RequestCompletedHandle = ([String:Any],Int) -> Void
+public typealias RequestFailedHandle = (Int,String) -> Void
 
 open class HttpPresenter: BasePresenter,HttpResponseHandle {
     
@@ -105,6 +105,7 @@ extension HttpPresenter{
             self?.originalModel = model
             if  model.success == false {
                 if self?.requestFailed == nil {
+                    AppConfig.shared.unifyProcessingFailed?(statusCode,messages.first~~)
                     self?.showFailView(messages.first~~)
                 }else{
                     self?.requestFailed?(statusCode,messages.first~~)
@@ -117,6 +118,7 @@ extension HttpPresenter{
         return self
     }
     
+    @discardableResult
     open func responseOriginalJson(completionHandler: @escaping ([String:Any]) -> Void ) -> Self{
         self.requestCompleted = {
             [weak self]
@@ -148,9 +150,10 @@ extension HttpPresenter{
         if mode == .def {
             self.statusView.show(inView: self.viewController?.view, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: message)
         } else if mode == .qui {
+            self.statusView.remove()
             AppDelegateInstance.window?.makeToast(message)
         }
     }
-    
+
 }
 
