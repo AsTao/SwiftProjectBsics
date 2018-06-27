@@ -15,18 +15,20 @@ import CryptoSwift
 
 class FirstViewController: BaseViewController<LoginPresenter> {
 
-  
+    var testView :BaseView =  BaseView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
+
         
     }
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(self.httpPresenter.viewController)
-        self.httpPresenter.login()
+//        print(self.httpPresenter.viewController)
+//        self.httpPresenter.login()
     }
 
 
