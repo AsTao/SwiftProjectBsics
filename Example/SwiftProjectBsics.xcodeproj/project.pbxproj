@@ -10,6 +10,7 @@
 		2B5DACED20DC8B4D005E9BA1 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5DACEC20DC8B4D005E9BA1 /* LoginPresenter.swift */; };
 		2B6EAFB620D255400029B12C /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B92D15320D243750047B535 /* FirstViewController.swift */; };
 		2B71EB2920C3759600802AF5 /* ObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B71EB2820C3759600802AF5 /* ObjectModel.swift */; };
+		2BE0DAE420E36F790097E986 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0DAE320E36F790097E986 /* TestView.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 		2B5DACEC20DC8B4D005E9BA1 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		2B71EB2820C3759600802AF5 /* ObjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectModel.swift; sourceTree = "<group>"; };
 		2B92D15320D243750047B535 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		2BE0DAE320E36F790097E986 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		2F61FB6345497A1D697F1349 /* Pods-SwiftProjectBsics_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftProjectBsics_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftProjectBsics_Example/Pods-SwiftProjectBsics_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		42980959A6995D9CB1ED8660 /* Pods_SwiftProjectBsics_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftProjectBsics_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BBD45B1FB8FBE4D68345F6C /* Pods-SwiftProjectBsics_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftProjectBsics_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftProjectBsics_Tests/Pods-SwiftProjectBsics_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				2B92D15320D243750047B535 /* FirstViewController.swift */,
 				2B71EB2820C3759600802AF5 /* ObjectModel.swift */,
 				2B5DACEC20DC8B4D005E9BA1 /* LoginPresenter.swift */,
+				2BE0DAE320E36F790097E986 /* TestView.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -284,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BE0DAE420E36F790097E986 /* TestView.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				2B71EB2920C3759600802AF5 /* ObjectModel.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
