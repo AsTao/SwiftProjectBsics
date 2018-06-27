@@ -114,7 +114,7 @@ extension HttpPresenter{
     @discardableResult
     open func request(strategy :BaseHttpStrategy) -> Self{
         if self.mode != .sil, self.viewController != nil {
-            self.statusView.show(inView:self.viewController?.view, mode: .loading)
+            self.statusView.show(inView:self.bindView, mode: .loading)
         }
         self.httpClient.strategy = strategy
         self.httpClient.request()
@@ -163,12 +163,12 @@ extension HttpPresenter{
         self.statusView.remove()
     }
     public func didFail(response :Any?, statusCode :Int, error :Error?){
-        self.statusView.show(inView: self.viewController?.view, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: safeString(response))
+        self.statusView.show(inView: self.bindView, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: safeString(response))
     }
     
     private func showFailView(_ message :String){
         if mode == .def {
-            self.statusView.show(inView: self.viewController?.view, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: message)
+            self.statusView.show(inView: self.bindView, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: message)
         } else if mode == .qui {
             self.statusView.remove()
             AppDelegateInstance.window?.makeToast(message)
