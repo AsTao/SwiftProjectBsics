@@ -15,9 +15,54 @@ public enum HttpPresenterMode {
     case sil
 }
 
+public protocol RequestResponseDecoder {
+    var dataKey :String {get set}
+    var otherDataKeys :[String] {get set}
+    var httpCodeRange :CountableClosedRange<Int> {get set}
+    var originalModel :Any? {get set}
+    func responseDecoding<T :Decodable>(httpCode :Int,response :[String:Any], completionHandler: @escaping (HttpDataResponse<T>) -> Void)
+}
+
+open class DefaultRequestResponseDecoder :RequestResponseDecoder{
+    public var dataKey: String = "data"
+    public var otherDataKeys: [String] = ["messages","result","exceptionType"]
+    public var httpCodeRange: CountableClosedRange<Int> = 200...299
+    public var originalModel :Any?
+    
+    open func responseDecoding<T :Decodable>(httpCode :Int,response :[String:Any], completionHandler: @escaping (HttpDataResponse<T>) -> Void){
+        var object :T?
+        if let responseData = response[dataKey] as? [String:Any]{
+            do {
+                let data = try JSONSerialization.data(withJSONObject: responseData, options: .prettyPrinted)
+                let decoder = JSONDecoder()
+                object = try decoder.decode(T.self, from: data)
+            }
+            catch  {
+                debugPrint(error)
+            }
+        }
+        guard object != nil else {return}
+        var dic :[String:Any] = [:]
+        otherDataKeys.forEach { key in
+            if let v = response[key]{dic[key] = v}
+        }
+        let model = HttpDataResponse<T>(data: object, statusCode: httpCode, otherData: dic)
+        self.originalModel = model
+        completionHandler(model)
+    }
+    
+    open func responseFailDecoding(httpCode :Int,response :[String:Any]) -> (Bool,Int,String){
+        let success = httpCodeRange.contains(httpCode)
+        var message = ""
+        if let list = response["messages"] as? [String]{
+            message = list.first~~
+        }
+        return (success,httpCode,message)
+    }
+}
 
 public typealias RequestCompletedHandle = ([String:Any],Int) -> Void
-public typealias RequestFailedHandle = (Int,String) -> Void
+public typealias RequestFailedHandle = (Bool,Int,String) -> Void
 
 open class HttpPresenter: BasePresenter,HttpResponseHandle {
     
@@ -27,7 +72,7 @@ open class HttpPresenter: BasePresenter,HttpResponseHandle {
     private var requestFailed :RequestFailedHandle?
     private var requestCompleted :RequestCompletedHandle?
     
-    public var originalModel :Any?
+    open var requestResponseDecoder: DefaultRequestResponseDecoder = DefaultRequestResponseDecoder()
     
     required public init() {
         super.init()
@@ -63,7 +108,6 @@ extension HttpPresenter{
         self.httpClient.strategy?.parameters = parameters
         self.httpClient.strategy?.method = method
         self.httpClient.strategy?.headers["agent"] = AppConfig.shared.sign.toJsonString()
-        //self.httpClient.strategy?.headers["Accept"] = "application/json"
         self.httpClient.request()
         return self
     }
@@ -81,38 +125,12 @@ extension HttpPresenter{
         self.requestCompleted = {
             [weak self]
             response,statusCode in
-            var object :T?
-            if statusCode == 200, let responseData = response["data"] as? [String:Any]{
-                do {
-                    let data = try JSONSerialization.data(withJSONObject: responseData, options: .prettyPrinted)
-                    let decoder = JSONDecoder()
-                    object = try decoder.decode(T.self, from: data)
-                }
-                catch  {
-                    debugPrint(error)
-                }
-            }
-            var messages :[String] = []
-            if let list = response["messages"] as? [String] {
-                messages = list
-            }
-        
-            let model = HttpDataResponse<T>(data: object,
-                                            statusCode: statusCode,
-                                            result: safeString(response["result"]),
-                                            messages: messages,
-                                            exceptionType: safeString(response["exceptionType"]))
-            self?.originalModel = model
-            if  model.success == false {
-                if self?.requestFailed == nil {
-                    AppConfig.shared.unifyProcessingFailed?(statusCode,messages.first~~)
-                    self?.showFailView(messages.first~~)
-                }else{
-                    self?.requestFailed?(statusCode,messages.first~~)
-                }
-            }else{
+            
+            self?.requestResponseDecoder.responseDecoding(httpCode: statusCode, response: response) { (model :HttpDataResponse<T>) in
                 completionHandler(model)
-                self?.statusView.remove()
+            }
+            if let dic = self?.requestResponseDecoder.responseFailDecoding(httpCode: statusCode, response: response){
+                self?.requestFailed?(dic.0,dic.1,dic.2)
             }
         }
         return self
@@ -130,10 +148,11 @@ extension HttpPresenter{
         return self
     }
     
-    open func responseFail(completionHandler: @escaping (Int,String) -> Void ) -> Self{
+    @discardableResult
+    open func responseFail(completionHandler: @escaping (Bool,Int,String) -> Void ) -> Self{
         self.requestFailed = {
-            statusCode,message in
-            completionHandler(statusCode,message)
+            success,code,message in
+            completionHandler(success,code,message)
         }
         return self
     }
@@ -141,6 +160,7 @@ extension HttpPresenter{
     
     public func didSuccess(response :[String:Any], statusCode :Int){
         self.requestCompleted?(response,statusCode)
+        self.statusView.remove()
     }
     public func didFail(response :Any?, statusCode :Int, error :Error?){
         self.statusView.show(inView: self.viewController?.view, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: safeString(response))
