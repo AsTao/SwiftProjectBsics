@@ -8,9 +8,9 @@
 
 import UIKit
 
-open class BaseViewController<T :BasePresenter> : UIViewController {
+open class BaseViewController : UIViewController {
 
-    open var httpPresenter :T = T()
+    
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -27,12 +27,11 @@ open class BaseViewController<T :BasePresenter> : UIViewController {
 
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        httpPresenter.bindViewController(viewController: self)
         AppDelegateInstance.currentViewController = self
     }
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        httpPresenter.unbind()
+
     }
     
     public var navigationTitleColor :UIColor?

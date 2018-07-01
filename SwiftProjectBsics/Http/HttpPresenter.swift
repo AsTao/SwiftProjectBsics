@@ -153,7 +153,7 @@ extension HttpPresenter{
         self.requestFailed = {
             [weak self]
             success,code,message in
-            if self?.mode != .sil {
+            if code != 200 ,self?.mode != .sil, message.count > 0 {
                 AppDelegateInstance.window?.makeToast(message)
             }
             completionHandler(success,code,message)
@@ -171,6 +171,7 @@ extension HttpPresenter{
             self.statusView.show(inView: self.bindView, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: safeString(response))
         } else if mode == .qui {
             self.statusView.remove()
+            guard safeString(response).count > 0 else {return}
             AppDelegateInstance.window?.makeToast(safeString(response))
         }
     }

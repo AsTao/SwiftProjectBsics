@@ -13,7 +13,7 @@ import CryptoSwift
 
 
 
-class FirstViewController: BaseViewController<LoginPresenter> {
+class FirstViewController: HttpViewController<LoginPresenter> {
 
     var testView :TestView =  TestView()
     

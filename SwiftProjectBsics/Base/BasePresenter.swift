@@ -8,7 +8,7 @@
 import UIKit
 
 
-protocol BasePresenterProtocol {
+public protocol BasePresenterProtocol {
     func didBind()
     func willUnbind()
 }

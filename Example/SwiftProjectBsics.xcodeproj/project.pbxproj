@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B3C7F5520E8635E0016746F /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3C7F5420E8635E0016746F /* SecondViewController.swift */; };
+		2B5BA70120E867940064628B /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5BA70020E867940064628B /* TestViewController.swift */; };
 		2B5DACED20DC8B4D005E9BA1 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5DACEC20DC8B4D005E9BA1 /* LoginPresenter.swift */; };
 		2B6EAFB620D255400029B12C /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B92D15320D243750047B535 /* FirstViewController.swift */; };
 		2B71EB2920C3759600802AF5 /* ObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B71EB2820C3759600802AF5 /* ObjectModel.swift */; };
@@ -21,6 +23,8 @@
 
 /* Begin PBXFileReference section */
 		0EED84C79674B48F38383129 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		2B3C7F5420E8635E0016746F /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		2B5BA70020E867940064628B /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		2B5DACEC20DC8B4D005E9BA1 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		2B71EB2820C3759600802AF5 /* ObjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectModel.swift; sourceTree = "<group>"; };
 		2B92D15320D243750047B535 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +106,8 @@
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				2B92D15320D243750047B535 /* FirstViewController.swift */,
+				2B3C7F5420E8635E0016746F /* SecondViewController.swift */,
+				2B5BA70020E867940064628B /* TestViewController.swift */,
 				2B71EB2820C3759600802AF5 /* ObjectModel.swift */,
 				2B5DACEC20DC8B4D005E9BA1 /* LoginPresenter.swift */,
 				2BE0DAE320E36F790097E986 /* TestView.swift */,
@@ -289,8 +295,10 @@
 			files = (
 				2BE0DAE420E36F790097E986 /* TestView.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				2B5BA70120E867940064628B /* TestViewController.swift in Sources */,
 				2B71EB2920C3759600802AF5 /* ObjectModel.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				2B3C7F5520E8635E0016746F /* SecondViewController.swift in Sources */,
 				2B6EAFB620D255400029B12C /* FirstViewController.swift in Sources */,
 				2B5DACED20DC8B4D005E9BA1 /* LoginPresenter.swift in Sources */,
 			);
