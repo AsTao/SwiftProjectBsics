@@ -121,3 +121,29 @@ extension UIView{
     }
 }
 
+public func modelWithJSON<T :Decodable>(data :[String:Any]) -> T?{
+    var object :T?
+    do {
+        let data = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+        let decoder = JSONDecoder()
+        object = try decoder.decode(T.self, from: data)
+    }
+    catch  {
+        debugPrint(error)
+    }
+    return object
+}
+public func modelArrayWithClass<T :Decodable>(data :[Any]) -> [T]?{
+    var object :[T]?
+    do {
+        let data = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+        let decoder = JSONDecoder()
+        object = try decoder.decode([T].self, from: data)
+    }
+    catch  {
+        debugPrint(error)
+    }
+    return object
+}
+
+

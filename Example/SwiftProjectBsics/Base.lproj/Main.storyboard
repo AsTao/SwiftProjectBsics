@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="POd-kN-2HA">
-                                <rect key="frame" x="119" y="383" width="136" height="147"/>
+                                <rect key="frame" x="119" y="383" width="136" height="102"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Button"/>
@@ -37,6 +37,15 @@
                                 <state key="normal" title="get"/>
                                 <connections>
                                     <action selector="buttonAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="kTl-fJ-4Ty"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tiN-j4-rO5">
+                                <rect key="frame" x="119" y="521" width="136" height="102"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="OeO-Ac-PQn" kind="show" id="2CR-to-f91"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -64,7 +73,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KQZ-o3-BeY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1799" y="118"/>
+            <point key="canvasLocation" x="1897" y="-557"/>
         </scene>
         <!--Test View Controller-->
         <scene sceneID="f5j-Bc-EHj">
@@ -82,7 +91,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NC7-7r-ZMX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2886" y="133"/>
+            <point key="canvasLocation" x="1946.4000000000001" y="339.58020989505252"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="uxb-WY-7Ha">

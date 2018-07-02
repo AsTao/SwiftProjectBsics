@@ -12,8 +12,6 @@ import UIKit
 
 public struct ObjectModel :Decodable {
 
-
-    
     var mobileNo :String
 
 }

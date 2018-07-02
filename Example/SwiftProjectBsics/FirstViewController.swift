@@ -15,19 +15,18 @@ import CryptoSwift
 
 class FirstViewController: HttpViewController<LoginPresenter> {
 
-    var testView :TestView =  TestView()
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
-      
         
-        print(testView.httpPresenter.view)
-        self.view.addSubview(testView)
-        print(testView.httpPresenter.view)
-       // testView.removeFromSuperview()
-        print(testView.httpPresenter.view)
+        
+        
+      //  print(httpPresenter.bindView)
+
+
         
     }
     
@@ -35,6 +34,7 @@ class FirstViewController: HttpViewController<LoginPresenter> {
         super.viewWillAppear(animated)
 //        print(self.httpPresenter.viewController)
 //        self.httpPresenter.login()
+         print(httpPresenter.bindView)
     }
 
 

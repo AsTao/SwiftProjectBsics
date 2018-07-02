@@ -1,12 +1,14 @@
 PODS:
   - Alamofire (4.7.2)
   - CryptoSwift (0.10.0)
+  - MJRefresh (3.1.15.3)
   - NVActivityIndicatorView (4.2.1):
     - NVActivityIndicatorView/Presenter (= 4.2.1)
   - NVActivityIndicatorView/Presenter (4.2.1)
-  - SwiftProjectBsics (0.1.2):
+  - SwiftProjectBsics (0.1.4):
     - Alamofire
     - CryptoSwift
+    - MJRefresh
     - NVActivityIndicatorView
     - Toast-Swift
   - Toast-Swift (3.0.1)
@@ -21,8 +23,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
+  MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
   NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
-  SwiftProjectBsics: 4389f7c8c4922b8e99552d1e7908a128c532cf94
+  SwiftProjectBsics: 7da5c1b92a6d408051701dfb677fe4ead2ea039d
   Toast-Swift: ba0b01b095aada709d915f9beb1d38184a2721c3
 
 PODFILE CHECKSUM: 921da206fb6487b8bfa396b08da8f390ae903565
