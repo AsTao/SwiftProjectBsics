@@ -9,7 +9,7 @@ import UIKit
 import MJRefresh
 
 extension UITableViewDelegate {
-    func tableView(tableView :UITableView, requestSuccess :Any, page :Int) -> [Any]?{
+    func tableView(tableView :UITableView, response :Any, page :Int) -> [Any]?{
         return nil
     }
 }
@@ -19,7 +19,11 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     
     public var dataItems :[Any] = []
     public var cellReuseIdentifier :String = ""
-    public var httpStrategy :HttpStrategy = BaseHttpStrategy()
+    public var httpPageStrategy :HttpStrategy = BaseHttpStrategy(){
+        didSet{
+            self.httpClient.strategy = httpPageStrategy
+        }
+    }
     
     public var beginPage :Int = 0
     public var pageSize :Int = 20
@@ -49,13 +53,13 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     private var _page :Int = 0
     @objc func refreshTableHeaderDidTriggerRefresh(){
         self._page = self.beginPage
-        self.httpStrategy.parameters[httpPageKey] = _page
-        self.httpStrategy.parameters[httpPageSizeKey] = pageSize
+        self.httpPageStrategy.parameters[httpPageKey] = _page
+        self.httpPageStrategy.parameters[httpPageSizeKey] = pageSize
         self.httpClient.request()
     }
     @objc func loadMoreTableHeaderDidTriggerRefresh(){
-        self.httpStrategy.parameters[httpPageKey] = _page
-        self.httpStrategy.parameters[httpPageSizeKey] = pageSize
+        self.httpPageStrategy.parameters[httpPageKey] = _page
+        self.httpPageStrategy.parameters[httpPageSizeKey] = pageSize
         self.httpClient.request()
     }
     
@@ -93,7 +97,7 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     private func config(){
         self.dataSource = self
         self.httpClient.responseHandle = self
-        self.httpStrategy.headers["agent"] = AppConfig.shared.sign.toJsonString()
+        self.httpPageStrategy.headers["agent"] = AppConfig.shared.sign.toJsonString()
         self.refreshHeader.mj_h = 60
         self.loadMoreFooter.mj_h = 60
         self.refreshHeader.lastUpdatedTimeLabel.isHidden = true
@@ -116,7 +120,7 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
         }
         _page += 1
         var dataCount :Int = 0
-        if let list = self.delegate?.tableView(tableView: self, requestSuccess: response, page: _page) {
+        if let list = self.delegate?.tableView(tableView: self, response: response, page: _page) {
             dataCount = list.count
             self.dataItems.append(contentsOf: list)
         }else{

@@ -15,12 +15,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     
         
-       
+       let client = HttpTableView(frame: CGRect.zero)
         
     }
 
     @IBAction func buttonAction(_ sender: Any) {
-        let client = HttpClient()
+        
         
         
 //        let str = BaseHttpStrategy()
