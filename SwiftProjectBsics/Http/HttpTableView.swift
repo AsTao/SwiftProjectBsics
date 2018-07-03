@@ -28,6 +28,14 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     
     public var httpClient :HttpClient = HttpClient()
     
+    public func beginRefreshing(){
+        if self.dataItems.count == 0 {
+            self.httpStatusView.show(inView: self, mode: .loading)
+        }
+        self.refreshTableHeaderDidTriggerRefresh()
+    }
+    
+    
     lazy var refreshHeader: MJRefreshNormalHeader = {
         let header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(refreshTableHeaderDidTriggerRefresh))
         return header!
