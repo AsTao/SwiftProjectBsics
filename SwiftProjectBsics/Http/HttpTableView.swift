@@ -8,14 +8,14 @@
 import UIKit
 import MJRefresh
 
-extension UITableViewDelegate {
-    func tableView(tableView :UITableView, response :Any, page :Int) -> [Any]?{
-        return nil
-    }
+@objc public protocol HttpTableViewDataHandle{
+   @objc func tableView(tableView :UITableView, response :Any, page :Int) -> [Any]?
 }
 
-open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
 
+open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
+    
+    public weak var pageDelegate :HttpTableViewDataHandle?
     
     public var dataItems :[Any] = []
     public var cellReuseIdentifier :String = ""
@@ -120,7 +120,7 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
         }
         _page += 1
         var dataCount :Int = 0
-        if let list = self.delegate?.tableView(tableView: self, response: response, page: _page) {
+        if let list = self.pageDelegate?.tableView(tableView: self, response: response, page: _page) {
             dataCount = list.count
             self.dataItems.append(contentsOf: list)
         }else{
@@ -159,6 +159,9 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+//    @objc open func tableView(tableView :UITableView, response :Any, page :Int) -> [Any]?{
+//        return nil
+//    }
 }
 
 open class HttpEndingView :UIView{
