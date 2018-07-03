@@ -21,8 +21,8 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     public var cellReuseIdentifier :String = ""
     public var httpStrategy :HttpStrategy = BaseHttpStrategy()
     
-    public var page :Int = 0
-    public var pageSize :Int = 0
+    public var beginPage :Int = 0
+    public var pageSize :Int = 20
     public var httpPageKey :String = "pageNo"
     public var httpPageSizeKey :String = "pageSize"
     
@@ -46,14 +46,15 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
         return header!
     }()
     
+    private var _page :Int = 0
     @objc func refreshTableHeaderDidTriggerRefresh(){
-        self.page = 0
-        self.httpStrategy.parameters[httpPageKey] = page
+        self._page = self.beginPage
+        self.httpStrategy.parameters[httpPageKey] = _page
         self.httpStrategy.parameters[httpPageSizeKey] = pageSize
         self.httpClient.request()
     }
     @objc func loadMoreTableHeaderDidTriggerRefresh(){
-        self.httpStrategy.parameters[httpPageKey] = page
+        self.httpStrategy.parameters[httpPageKey] = _page
         self.httpStrategy.parameters[httpPageSizeKey] = pageSize
         self.httpClient.request()
     }
@@ -110,12 +111,12 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     }
     
     public func didSuccess(response :[String:Any], statusCode :Int){
-        if page == 0 {
+        if _page == 0 {
             self.dataItems.removeAll()
         }
-        page += 1
+        _page += 1
         var dataCount :Int = 0
-        if let list = self.delegate?.tableView(tableView: self, requestSuccess: response, page: page) {
+        if let list = self.delegate?.tableView(tableView: self, requestSuccess: response, page: _page) {
             dataCount = list.count
             self.dataItems.append(contentsOf: list)
         }else{
