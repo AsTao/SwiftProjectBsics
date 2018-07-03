@@ -65,7 +65,13 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
         return view
     }()
   
-    override init(frame: CGRect, style: UITableViewStyle) {
+    
+    public init(frame: CGRect) {
+        super.init(frame: frame, style: .plain)
+        config()
+    }
+    
+    override public init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
         config()
     }
