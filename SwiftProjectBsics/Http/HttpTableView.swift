@@ -27,11 +27,7 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     
     public var httpClient :HttpClient = HttpClient()
     
-    public var httpPageStrategy :HttpStrategy = BaseHttpStrategy(){
-        didSet{
-            self.httpClient.strategy = httpPageStrategy
-        }
-    }
+    public var httpPageStrategy :HttpStrategy = BaseHttpStrategy()
     
     public var ignoreHeaderViewHeightForStatusView :Bool = false{
         didSet{
@@ -67,11 +63,13 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
         self._page = self.beginPage
         self.httpPageStrategy.parameters[httpPageKey] = _page
         self.httpPageStrategy.parameters[httpPageSizeKey] = pageSize
+        self.httpClient.strategy = httpPageStrategy
         self.httpClient.request()
     }
     @objc func loadMoreTableHeaderDidTriggerRefresh(){
         self.httpPageStrategy.parameters[httpPageKey] = _page
         self.httpPageStrategy.parameters[httpPageSizeKey] = pageSize
+        self.httpClient.strategy = httpPageStrategy
         self.httpClient.request()
     }
     
