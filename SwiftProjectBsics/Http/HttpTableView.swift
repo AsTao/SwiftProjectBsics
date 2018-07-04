@@ -108,7 +108,7 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
         self.dataSource = self
         self.httpClient.responseHandle = self
         for key in AppConfig.shared.sign.keys{
-            self.httpClient.strategy?.headers[key] = AppConfig.shared.sign[key]
+            self.httpPageStrategy.headers[key] = AppConfig.shared.sign[key]
         }
         self.refreshHeader.mj_h = 60
         self.loadMoreFooter.mj_h = 60
