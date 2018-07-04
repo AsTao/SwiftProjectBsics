@@ -127,7 +127,7 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     }
     
     public func didSuccess(response :[String:Any], statusCode :Int){
-        if _page == 0 {
+        if _page == beginPage {
             self.dataItems.removeAll()
         }
         _page += 1
@@ -145,13 +145,12 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
             self.mj_footer = nil
             self.httpStatusView.show(inView: self, mode: .noData, msg: "请求失败了！点击空白处刷新页面")
         }else{
-            if dataCount < pageSize {
-                self.mj_footer = nil
-                self.tableFooterView = self.endingView
-                
-            }else{
+            if dataCount >= pageSize {
                 self.tableFooterView = nil
                 self.mj_footer = loadMoreFooter
+            }else{
+                self.mj_footer = nil
+                self.tableFooterView = self.endingView
             }
             self.httpStatusView.remove()
             self.reloadData()
