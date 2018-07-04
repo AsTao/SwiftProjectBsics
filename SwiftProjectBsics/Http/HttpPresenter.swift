@@ -107,7 +107,9 @@ extension HttpPresenter{
         self.httpClient.strategy?.url = url
         self.httpClient.strategy?.parameters = parameters
         self.httpClient.strategy?.method = method
-        self.httpClient.strategy?.headers["agent"] = AppConfig.shared.sign.toJsonString()
+        for key in AppConfig.shared.sign.keys{
+            self.httpClient.strategy?.headers[key] = AppConfig.shared.sign[key]
+        }
         self.httpClient.request()
         return self
     }

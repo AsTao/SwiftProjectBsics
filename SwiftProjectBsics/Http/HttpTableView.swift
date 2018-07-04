@@ -109,7 +109,9 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     private func config(){
         self.dataSource = self
         self.httpClient.responseHandle = self
-        self.httpPageStrategy.headers["agent"] = AppConfig.shared.sign.toJsonString()
+        for key in AppConfig.shared.sign.keys{
+            self.httpClient.strategy?.headers[key] = AppConfig.shared.sign[key]
+        }
         self.refreshHeader.mj_h = 60
         self.loadMoreFooter.mj_h = 60
         self.refreshHeader.lastUpdatedTimeLabel.isHidden = true
