@@ -15,6 +15,8 @@ public enum HttpStatusViewDisplayMode {
 }
 public class HttpStatusView: UIControl {
 
+    public var ignoreHeight :CGFloat = 0
+    
     public var viewMode :HttpStatusViewDisplayMode?{
         didSet{
             guard let mode = viewMode  else {return }
@@ -55,7 +57,7 @@ public class HttpStatusView: UIControl {
         }
         sview.endEditing(true)
         self.removeFromSuperview()
-        self.frame = CGRect(x: 0, y: 0, width: sview.width, height: sview.height)
+        self.frame = CGRect(x: 0, y: ignoreHeight, width: sview.width, height: sview.height-ignoreHeight)
         self.viewMode = mode
         sview.addSubview(self)
         self.alpha = 0

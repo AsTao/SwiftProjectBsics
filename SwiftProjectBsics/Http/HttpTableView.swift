@@ -9,7 +9,7 @@ import UIKit
 import MJRefresh
 
 @objc public protocol HttpTableViewDataHandle{
-   @objc func tableView(tableView :UITableView, response :Any, page :Int) -> [Any]?
+   @objc func tableView(tableView :UITableView, response :[String:Any], page :Int) -> [Any]?
 }
 
 
@@ -19,11 +19,6 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     
     public var dataItems :[Any] = []
     public var cellReuseIdentifier :String = ""
-    public var httpPageStrategy :HttpStrategy = BaseHttpStrategy(){
-        didSet{
-            self.httpClient.strategy = httpPageStrategy
-        }
-    }
     
     public var beginPage :Int = 0
     public var pageSize :Int = 20
@@ -31,6 +26,23 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     public var httpPageSizeKey :String = "pageSize"
     
     public var httpClient :HttpClient = HttpClient()
+    
+    public var httpPageStrategy :HttpStrategy = BaseHttpStrategy(){
+        didSet{
+            self.httpClient.strategy = httpPageStrategy
+        }
+    }
+    
+    public var ignoreHeaderViewHeightForStatusView :Bool = false{
+        didSet{
+            guard let hView = self.tableHeaderView else {return}
+            if ignoreHeaderViewHeightForStatusView {
+                self.httpStatusView.ignoreHeight = hView.height
+            }else{
+                self.httpStatusView.ignoreHeight = 0
+            }
+        }
+    }
     
     public func beginRefreshing(){
         if self.dataItems.count == 0 {
