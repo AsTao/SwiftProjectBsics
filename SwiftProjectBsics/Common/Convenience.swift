@@ -147,3 +147,18 @@ public func modelArrayWithClass<T :Decodable>(data :[Any]) -> [T]?{
 }
 
 
+public func modelToJSONString<T :Encodable>(model :T) -> String{
+    var object :String = ""
+    do {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(model)
+        object = String(data: data, encoding: .utf8)~~
+    }
+    catch  {
+        debugPrint(error)
+    }
+    return object
+}
+
+
+

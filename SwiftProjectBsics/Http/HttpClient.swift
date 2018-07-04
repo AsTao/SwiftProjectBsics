@@ -45,10 +45,12 @@ open class HttpClient: NSObject {
             .responseJSON{ response in
                 
             if let res = response.response {
-                if response.result.isSuccess , let value = response.result.value as? [String:Any] {
-                    self.responseHandle?.didSuccess(response: value, statusCode: res.statusCode)
-                }else{
-                    self.responseHandle?.didFail(response: response.result.value, statusCode: res.statusCode, error: response.error)
+                if AppConfig.shared.unifyProcessingFailed!(res.statusCode,response.result.value) {
+                    if response.result.isSuccess , let value = response.result.value as? [String:Any] {
+                        self.responseHandle?.didSuccess(response: value, statusCode: res.statusCode)
+                    }else{
+                        self.responseHandle?.didFail(response: response.result.value, statusCode: res.statusCode, error: response.error)
+                    }
                 }
             }else{
                 self.responseHandle?.didFail(response: response.result.value, statusCode: 999, error: response.error)
@@ -59,9 +61,6 @@ open class HttpClient: NSObject {
     
 
 
-    
-    
-    
 //    public lazy var manager :SessionManager = {
 //        let headers = SessionManager.defaultHTTPHeaders
 //        let conf = URLSessionConfiguration.default

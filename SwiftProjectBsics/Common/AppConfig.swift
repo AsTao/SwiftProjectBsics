@@ -15,7 +15,7 @@ public enum NetworkStatus {
     case wwan
 }
 
-public typealias GlobalFailedRequestCallback = (Int,String) -> Void
+public typealias GlobalFailedRequestCallback = (Int,Any?) -> Bool
 public class AppConfig: NSObject {
     
     public static let shared : AppConfig = {
