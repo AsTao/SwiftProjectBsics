@@ -39,13 +39,13 @@ public class HttpStatusView: UIControl {
     public var message :String = "" {
         didSet{
             self.messageLabel.text = message
-            self.messageLabel.height = message.compatibleSizeFont(messageLabel.font, width: self.width - 40).height
+            self.messageLabel.height = message.compatibleSizeFont(messageLabel.font, width: self.width - 15).height
         }
     }
     public var serverMessage :String = "" {
         didSet{
             self.serverMessageLabel.text = serverMessage
-            self.serverMessageLabel.height = serverMessage.compatibleSizeFont(serverMessageLabel.font, width: self.width - 40).height
+            self.serverMessageLabel.height = min(self.height/4, serverMessage.compatibleSizeFont(serverMessageLabel.font, width: self.width - 15).height)
         }
     }
     public func show(inView view :UIView?, mode :HttpStatusViewDisplayMode, msg :String = "", note :String = "", animate :Bool = true){
@@ -87,19 +87,20 @@ public class HttpStatusView: UIControl {
         self.addSubview(self.logoImageView)
         self.addSubview(self.messageLabel)
         self.addSubview(self.serverMessageLabel)
-        self.logoImageView.addSubview(self.indicatorView)
+        self.addSubview(self.indicatorView)
     }
     override public func layoutSubviews() {
         super.layoutSubviews()
-        self.indicatorView.center = CGPoint(x: 125, y: 125)
-        self.logoImageView.frame = CGRect(x: self.width/2-125, y: self.height/2-250, width: 250, height: 250)
-        self.messageLabel.frame = CGRect(x: 20, y: logoImageView.bottom + 30 , width: self.width - 40, height: messageLabel.height)
+        self.indicatorView.center = CGPoint(x: self.width/2, y: self.height/2)
+        self.logoImageView.center = CGPoint(x: self.width/2, y: self.height/2)
+        self.messageLabel.frame = CGRect(x: 15, y: logoImageView.bottom + 30 , width: self.width - 15, height: messageLabel.height)
         let offset = AppDelegateInstance.currentViewController!.hidesBottomBarWhenPushed ? 0 : _BARH
-        self.serverMessageLabel.frame = CGRect(x: 20, y: self.height - serverMessageLabel.height - 20 - offset, width: self.width - 40, height: serverMessageLabel.height)
+        let y = self.height - serverMessageLabel.height - 20 - offset
+        self.serverMessageLabel.frame = CGRect(x: 15, y: max(y, messageLabel.bottom + 5), width: self.width - 15, height: serverMessageLabel.height)
     }
     
     private lazy var logoImageView: UIImageView = {
-        let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 250, height: 250))
+        let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 62, height: 62))
         view.contentMode = .scaleAspectFit
         return view
     }()
