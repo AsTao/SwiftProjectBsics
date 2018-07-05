@@ -73,7 +73,7 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
         self.httpClient.request()
     }
     
-    private lazy var httpStatusView: HttpStatusView = {
+    open lazy var httpStatusView: HttpStatusView = {
         let view = HttpStatusView(frame: CGRect(x: 0, y: 0, width: _SW, height: _SH))
         view.addTarget(self, action: #selector(refreshRequest), for: .touchUpInside)
         return view
