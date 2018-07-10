@@ -69,24 +69,22 @@ extension String {
     
     
     public func compatibleSizeWithFont( _ font: UIFont,_ width: CGFloat,_ lineSpacing :CGFloat) -> CGSize{
-        
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = lineSpacing
+        paragraphStyle.alignment = .justified
+        paragraphStyle.lineSpacing = 5
         paragraphStyle.lineBreakMode = .byCharWrapping
         let rect = self.boundingRect(with: CGSize(width: width,height: CGFloat(MAXFLOAT)),
-                                     options: [.usesLineFragmentOrigin,.usesFontLeading], attributes:[NSAttributedStringKey.font: font,NSAttributedStringKey.paragraphStyle: paragraphStyle],
-                                     context: nil);
+                                     options: [ NSStringDrawingOptions.truncatesLastVisibleLine , NSStringDrawingOptions.usesLineFragmentOrigin , NSStringDrawingOptions.usesFontLeading],
+                                     attributes:[NSAttributedStringKey.font: font,NSAttributedStringKey.paragraphStyle: paragraphStyle], context: nil)
         return CGSize(width: ceil(rect.size.width), height: ceil(rect.size.height))
     }
     
     public func compatibleSizeFont( _ font: UIFont, width: CGFloat) -> CGSize{
         
-        //  NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-        
         let rect = self.boundingRect(with: CGSize(width: width,height: CGFloat(MAXFLOAT)), options: [ NSStringDrawingOptions.truncatesLastVisibleLine , NSStringDrawingOptions.usesLineFragmentOrigin , NSStringDrawingOptions.usesFontLeading], attributes:[NSAttributedStringKey.font: font,
                                                                                                                                                                                                                                                              NSAttributedStringKey.paragraphStyle: NSParagraphStyle.default], context: nil)
         
-        return rect.size
+        return CGSize(width: ceil(rect.size.width), height: ceil(rect.size.height))
         
     }
     

@@ -91,8 +91,8 @@ public class HttpStatusView: UIControl {
     }
     override public func layoutSubviews() {
         super.layoutSubviews()
-        self.indicatorView.center = CGPoint(x: self.width/2, y: self.height/2)
-        self.logoImageView.center = CGPoint(x: self.width/2, y: self.height/2)
+        self.indicatorView.center = CGPoint(x: self.width/2, y: self.height/2 - logoImageView.height)
+        self.logoImageView.center = CGPoint(x: self.width/2, y: self.height/2 - logoImageView.height)
         self.messageLabel.frame = CGRect(x: 15, y: logoImageView.bottom + 30 , width: self.width - 15, height: messageLabel.height)
         let offset = AppDelegateInstance.currentViewController!.hidesBottomBarWhenPushed ? 0 : _BARH
         let y = self.height - serverMessageLabel.height - 20 - offset
@@ -108,16 +108,16 @@ public class HttpStatusView: UIControl {
         let view = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
         view.textAlignment = .center
         view.numberOfLines = 0
-        view.font = UIFont.systemFont(ofSize: 14)
-        view.textColor = _RGB(0x6d6d6d)
+        view.font = UIFont.systemFont(ofSize: 12)
+        view.textColor = _RGB(0x909090)
         return view
     }()
     private lazy var serverMessageLabel: UILabel = {
         let view = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
         view.textAlignment = .center
         view.numberOfLines = 0
-        view.font = UIFont.systemFont(ofSize: 14)
-        view.textColor = _RGB(0x6d6d6d)
+        view.font = UIFont.systemFont(ofSize: 12)
+        view.textColor = _RGB(0x909090)
         return view
     }()
     private lazy var indicatorView: NVActivityIndicatorView = {
