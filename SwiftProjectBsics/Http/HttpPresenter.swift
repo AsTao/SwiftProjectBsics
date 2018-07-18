@@ -31,7 +31,7 @@ open class DefaultRequestResponseDecoder :RequestResponseDecoder{
     
     open func responseDecoding<T :Decodable>(httpCode :Int,response :[String:Any], completionHandler: @escaping (HttpDataResponse<T>) -> Void){
         var object :T?
-        if let responseData = response[dataKey] as? [String:Any]{
+        if let responseData = response[dataKey]{
             do {
                 let data = try JSONSerialization.data(withJSONObject: responseData, options: .prettyPrinted)
                 let decoder = JSONDecoder()

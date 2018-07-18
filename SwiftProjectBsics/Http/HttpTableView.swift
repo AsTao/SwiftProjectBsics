@@ -9,7 +9,7 @@ import UIKit
 import MJRefresh
 
 @objc public protocol HttpTableViewDataHandle{
-   @objc func tableView(tableView :UITableView, response :[String:Any], page :Int) -> [Any]?
+   @objc func tableView(tableView :HttpTableView, response :[String:Any], page :Int) -> [Any]?
 }
 
 
@@ -143,7 +143,8 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
         }
         if self.dataItems.count == 0 {
             self.mj_footer = nil
-            self.httpStatusView.show(inView: self, mode: .noData, msg: "请求失败了！点击空白处刷新页面")
+            self.reloadData()
+            self.httpStatusView.show(inView: self, mode: .noData, msg: "暂时无数据")
         }else{
             if dataCount >= pageSize {
                 self.tableFooterView = nil
