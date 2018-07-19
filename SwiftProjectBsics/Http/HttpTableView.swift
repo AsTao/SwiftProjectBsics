@@ -63,12 +63,18 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
         self._page = self.beginPage
         self.httpPageStrategy.parameters[httpPageKey] = _page
         self.httpPageStrategy.parameters[httpPageSizeKey] = pageSize
+        for key in AppConfig.shared.sign.keys{
+            self.httpPageStrategy.headers[key] = AppConfig.shared.sign[key]
+        }
         self.httpClient.strategy = httpPageStrategy
         self.httpClient.request()
     }
     @objc func loadMoreTableHeaderDidTriggerRefresh(){
         self.httpPageStrategy.parameters[httpPageKey] = _page
         self.httpPageStrategy.parameters[httpPageSizeKey] = pageSize
+        for key in AppConfig.shared.sign.keys{
+            self.httpPageStrategy.headers[key] = AppConfig.shared.sign[key]
+        }
         self.httpClient.strategy = httpPageStrategy
         self.httpClient.request()
     }
@@ -158,6 +164,10 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
         }
     }
     public func didFail(response :Any?, statusCode :Int, error :Error?){
+        if statusCode == -999 {
+            self.httpStatusView.remove()
+            return
+        }
         self.reloadData()
         self.httpStatusView.show(inView: self, mode: .error, msg: "请求失败了！点击空白处刷新页面", note: error.debugDescription)
     }

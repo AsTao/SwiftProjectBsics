@@ -31,9 +31,10 @@ open class DefaultRequestResponseDecoder :RequestResponseDecoder{
     
     open func responseDecoding<T :Decodable>(httpCode :Int,response :[String:Any], completionHandler: @escaping (HttpDataResponse<T>) -> Void){
         var object :T?
-        if let responseData = response[dataKey]{
+        let responseData = response[dataKey]
+        if !(responseData is NSNull) {
             do {
-                let data = try JSONSerialization.data(withJSONObject: responseData, options: .prettyPrinted)
+                let data = try JSONSerialization.data(withJSONObject: responseData ?? "", options: .prettyPrinted)
                 let decoder = JSONDecoder()
                 object = try decoder.decode(T.self, from: data)
             }
@@ -169,7 +170,9 @@ extension HttpPresenter{
         self.statusView.remove()
     }
     public func didFail(response :Any?, statusCode :Int, error :Error?){
-        if mode == .def {
+        if statusCode == -999 {
+            self.statusView.remove()
+        }else if mode == .def {
             self.statusView.show(inView: self.bindView, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: safeString(response))
         } else if mode == .qui {
             self.statusView.remove()

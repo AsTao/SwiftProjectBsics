@@ -53,7 +53,9 @@ open class HttpClient: NSObject {
                     }
                 }
             }else{
-                self.responseHandle?.didFail(response: response.result.value, statusCode: 999, error: response.error)
+                debugPrint("request fail =\(url)")
+                let err = response.error as NSError?
+                self.responseHandle?.didFail(response: response.result.value, statusCode: err?.code ?? 0, error: response.error)
             }
                 
         }
