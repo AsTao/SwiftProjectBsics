@@ -52,7 +52,7 @@ open class DefaultRequestResponseDecoder :RequestResponseDecoder{
         completionHandler(model)
     }
     
-    open func responseFailDecoding(httpCode :Int,response :[String:Any]) -> (Bool,Int,String){
+    open func responseFailDecoding(httpCode :Int,response :[String:Any]) -> (Bool,Int,String,Any){
         var success = httpCodeRange.contains(httpCode)
         let result = response["result"] as? String
         var message = ""
@@ -62,20 +62,17 @@ open class DefaultRequestResponseDecoder :RequestResponseDecoder{
         if result == "failure"{
             success = false
         }
-        return (success,httpCode,message)
+        return (success,httpCode,message,response)
     }
 }
-
-public typealias RequestCompletedHandle = ([String:Any],Int) -> Void
-public typealias RequestFailedHandle = (Bool,Int,String) -> Void
 
 open class HttpPresenter: BasePresenter,HttpResponseHandle {
     
     public var httpClient :HttpClient = HttpClient()
     public var mode :HttpPresenterMode = .def
     
-    private var requestFailed :RequestFailedHandle?
-    private var requestCompleted :RequestCompletedHandle?
+    private var requestFailed :((Bool,Int,String,Any) -> Void)?
+    private var requestCompleted :(([String:Any],Int) -> Void)?
     
     open var requestResponseDecoder: DefaultRequestResponseDecoder = DefaultRequestResponseDecoder()
     
@@ -137,7 +134,7 @@ extension HttpPresenter{
                 completionHandler(model)
             }
             if let dic = self?.requestResponseDecoder.responseFailDecoding(httpCode: statusCode, response: response){
-                self?.requestFailed?(dic.0,dic.1,dic.2)
+                self?.requestFailed?(dic.0,dic.1,dic.2,dic.3)
             }
         }
         return self
@@ -156,14 +153,14 @@ extension HttpPresenter{
     }
     
     @discardableResult
-    open func responseFail(completionHandler: @escaping (Bool,Int,String) -> Void ) -> Self{
+    open func responseFail(completionHandler: @escaping (Bool,Int,String,Any) -> Void ) -> Self{
         self.requestFailed = {
             [weak self]
-            success,code,message in
+            success,code,message,response in
             if code != 200 ,self?.mode != .sil, message.count > 0 {
                 ToastViewMessage(message)
             }
-            completionHandler(success,code,message)
+            completionHandler(success,code,message,response)
         }
         return self
     }
