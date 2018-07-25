@@ -7,7 +7,7 @@
 
 import UIKit
 import Alamofire
-import Toast_Swift
+
 
 public enum HttpPresenterMode {
     case def
@@ -161,7 +161,7 @@ extension HttpPresenter{
             [weak self]
             success,code,message in
             if code != 200 ,self?.mode != .sil, message.count > 0 {
-                AppDelegateInstance.window?.makeToast(message)
+                ToastViewMessage(message)
             }
             completionHandler(success,code,message)
         }
@@ -181,7 +181,7 @@ extension HttpPresenter{
         } else if mode == .qui {
             self.statusView.remove()
             guard safeString(response).count > 0 else {return}
-            AppDelegateInstance.window?.makeToast(safeString(response))
+            ToastViewMessage(safeString(response))
         }
     }
     

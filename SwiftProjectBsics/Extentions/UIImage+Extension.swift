@@ -62,8 +62,18 @@ extension UIImage {
         guard let bundle = Bundle(for: BaseAppDelegate.self).path(forResource: "SwiftResource", ofType: "bundle") else {return nil}
         guard let resource = Bundle(path: bundle) else {return nil}
         let fix = UIScreen.main.scale > 2 ?  "@3x" : "@2x"
-        guard let file = resource.path(forResource: "\(named)\(fix)", ofType: "png") else {return nil}
-        return UIImage(contentsOfFile: file)
+        if let file = resource.path(forResource: "\(named)\(fix)", ofType: "png") {
+            return UIImage(contentsOfFile: file)
+        }else if fix == "@3x" {
+            if let file = resource.path(forResource: "\(named)@2x", ofType: "png") {
+                return UIImage(contentsOfFile: file)
+            }
+        }else if fix == "@2x" {
+            if let file = resource.path(forResource: "\(named)@3x", ofType: "png") {
+                return UIImage(contentsOfFile: file)
+            }
+        }
+        return nil
     }
     
 }

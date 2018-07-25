@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import NVActivityIndicatorView
+
 
 public enum HttpStatusViewDisplayMode {
     case noData
@@ -77,7 +77,7 @@ public class HttpStatusView: UIControl {
         self.removeFromSuperview()
     }
     
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         self.buildLayout()
     }
@@ -86,7 +86,7 @@ public class HttpStatusView: UIControl {
         self.buildLayout()
     }
     func buildLayout(){
-        self.backgroundColor = _RGB(0xeaeaea)
+        self.backgroundColor = _ARGB(0xeaeaea, a: 0.8)
         self.addSubview(self.logoImageView)
         self.addSubview(self.messageLabel)
         self.addSubview(self.serverMessageLabel)
@@ -123,8 +123,16 @@ public class HttpStatusView: UIControl {
         view.textColor = _RGB(0x909090)
         return view
     }()
-    private lazy var indicatorView: NVActivityIndicatorView = {
-        let view = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50), type: .ballSpinFadeLoader, color: _RGB(0x00a0e9), padding: 0)
+    private lazy var indicatorView: UIImageView = {
+        let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 80, height: 60))
+        view.animationDuration = 1
+        var images :[UIImage] = []
+        for i in 1...7{
+            if let img = UIImage.libBundleImage("dialog_loading_\(i)") {
+                images.append(img)
+            }
+        }
+        view.animationImages = images
         return view
     }()
 }
