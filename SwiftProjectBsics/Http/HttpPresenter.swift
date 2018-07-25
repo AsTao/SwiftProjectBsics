@@ -53,10 +53,14 @@ open class DefaultRequestResponseDecoder :RequestResponseDecoder{
     }
     
     open func responseFailDecoding(httpCode :Int,response :[String:Any]) -> (Bool,Int,String){
-        let success = httpCodeRange.contains(httpCode)
+        var success = httpCodeRange.contains(httpCode)
+        let result = response["result"] as? String
         var message = ""
         if let list = response["messages"] as? [String]{
             message = list.first~~
+        }
+        if result == "failure"{
+            success = false
         }
         return (success,httpCode,message)
     }
