@@ -173,12 +173,16 @@ extension HttpPresenter{
     public func didFail(response :Any?, statusCode :Int, error :Error?){
         if statusCode == -999 {
             self.statusView.remove()
-        }else if mode == .def {
+            return
+        }
+        if mode == .def {
             self.statusView.show(inView: self.bindView, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: safeString(response))
-        } else if mode == .qui {
+        }else if mode == .qui {
             self.statusView.remove()
             guard safeString(response).count > 0 else {return}
             ToastViewMessage(safeString(response))
+        }else if mode == .sil{
+            self.statusView.remove()
         }
     }
     

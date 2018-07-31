@@ -39,6 +39,7 @@ public let iphone6p = (_SH == 736.0)
 public let iphoneX  = (_SH == 812.0)
 
 public let _TOP :CGFloat = iphoneX ? 88 : 64
+public let _SBARH :CGFloat = iphoneX ? 44 : 20
 public let _BARH :CGFloat = iphoneX ? 83 : 49
 
 public func _scaleMiddle(_ v: CGFloat) -> CGFloat{return (v * (_SW/375))}

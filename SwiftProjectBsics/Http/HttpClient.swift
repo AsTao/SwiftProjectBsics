@@ -51,6 +51,8 @@ open class HttpClient: NSObject {
                     }else{
                         self.responseHandle?.didFail(response: response.result.value, statusCode: res.statusCode, error: response.error)
                     }
+                }else{
+                    self.responseHandle?.didFail(response: response.result.value, statusCode: -999, error: response.error)
                 }
             }else{
                 debugPrint("request fail =\(url)")
