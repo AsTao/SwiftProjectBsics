@@ -24,6 +24,7 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     public var pageSize :Int = 20
     public var httpPageKey :String = "pageNo"
     public var httpPageSizeKey :String = "pageSize"
+    public var isLoadPage :Bool = true
     
     public var httpClient :HttpClient = HttpClient()
     
@@ -48,21 +49,23 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     }
     
     
-    lazy var refreshHeader: MJRefreshNormalHeader = {
+    open lazy var refreshHeader: MJRefreshNormalHeader = {
         let header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(refreshTableHeaderDidTriggerRefresh))
         return header!
     }()
     
-    lazy var loadMoreFooter: MJRefreshBackNormalFooter = {
+    open lazy var loadMoreFooter: MJRefreshBackNormalFooter = {
         let header = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadMoreTableHeaderDidTriggerRefresh))
         return header!
     }()
     
     private var _page :Int = 0
     @objc func refreshTableHeaderDidTriggerRefresh(){
-        self._page = self.beginPage
-        self.httpPageStrategy.parameters[httpPageKey] = _page
-        self.httpPageStrategy.parameters[httpPageSizeKey] = pageSize
+        if isLoadPage {
+            self._page = self.beginPage
+            self.httpPageStrategy.parameters[httpPageKey] = _page
+            self.httpPageStrategy.parameters[httpPageSizeKey] = pageSize
+        }
         for key in AppConfig.shared.sign.keys{
             self.httpPageStrategy.headers[key] = AppConfig.shared.sign[key]
         }
@@ -70,8 +73,10 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
         self.httpClient.request()
     }
     @objc func loadMoreTableHeaderDidTriggerRefresh(){
-        self.httpPageStrategy.parameters[httpPageKey] = _page
-        self.httpPageStrategy.parameters[httpPageSizeKey] = pageSize
+        if isLoadPage {
+            self.httpPageStrategy.parameters[httpPageKey] = _page
+            self.httpPageStrategy.parameters[httpPageSizeKey] = pageSize
+        }
         for key in AppConfig.shared.sign.keys{
             self.httpPageStrategy.headers[key] = AppConfig.shared.sign[key]
         }
@@ -152,16 +157,20 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
             self.reloadData()
             self.httpStatusView.show(inView: self, mode: .noData, msg: "暂时无数据")
         }else{
-            if dataCount >= pageSize {
-                self.tableFooterView = nil
-                self.mj_footer = loadMoreFooter
-            }else{
-                self.mj_footer = nil
-                self.tableFooterView = self.endingView
+            if isLoadPage {
+                if dataCount >= pageSize {
+                    self.tableFooterView = nil
+                    self.mj_footer = loadMoreFooter
+                }else{
+                    self.mj_footer = nil
+                    self.tableFooterView = self.endingView
+                }
             }
             self.httpStatusView.remove()
             self.reloadData()
         }
+        
+        
     }
     public func didFail(response :Any?, statusCode :Int, error :Error?){
         if statusCode == -999 {
