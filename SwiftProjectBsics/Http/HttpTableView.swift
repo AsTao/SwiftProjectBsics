@@ -61,8 +61,8 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     
     private var _page :Int = 0
     @objc func refreshTableHeaderDidTriggerRefresh(){
+        self._page = self.beginPage
         if isLoadPage {
-            self._page = self.beginPage
             self.httpPageStrategy.parameters[httpPageKey] = _page
             self.httpPageStrategy.parameters[httpPageSizeKey] = pageSize
         }
