@@ -176,7 +176,7 @@ extension HttpPresenter{
             return
         }
         if mode == .def {
-            self.statusView.show(inView: self.bindView, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: safeString(response))
+            self.statusView.show(inView: self.bindView, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: "")
         }else if mode == .qui {
             self.statusView.remove()
             guard safeString(response).count > 0 else {return}

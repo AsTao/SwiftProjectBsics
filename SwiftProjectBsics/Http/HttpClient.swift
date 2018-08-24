@@ -36,14 +36,20 @@ open class HttpClient: NSObject {
     public var responseHandle :HttpResponseHandle?
     private var dataRequest :DataRequest?
     
+    static let sharedSessionManager: Alamofire.SessionManager = {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 20
+        return Alamofire.SessionManager(configuration: configuration)
+    }()
+    
+    public var manage :SessionManager = HttpClient.sharedSessionManager
+    
     open func request(){
         guard let s = strategy else {return;}
         self.dataRequest?.cancel()
         let url = AppConfig.assembleServerUrl(url: s.url)
         debugPrint(url)
-        self.dataRequest = Alamofire.request(url, method: s.method, parameters: s.parameters, encoding: s.encoding, headers: s.headers)
-            .responseJSON{ response in
-                
+        self.dataRequest = manage.request(url, method: s.method, parameters: s.parameters, encoding: s.encoding, headers: s.headers).responseJSON{ response in
             if let res = response.response {
                 if AppConfig.shared.unifyProcessingFailed!(res.statusCode,response.result.value) {
                     if response.result.isSuccess , let value = response.result.value as? [String:Any] {
@@ -59,21 +65,8 @@ open class HttpClient: NSObject {
                 let err = response.error as NSError?
                 self.responseHandle?.didFail(response: response.result.value, statusCode: err?.code ?? 0, error: response.error)
             }
-                
         }
     }
-    
-
-
-//    public lazy var manager :SessionManager = {
-//        let headers = SessionManager.defaultHTTPHeaders
-//        let conf = URLSessionConfiguration.default
-//        conf.httpAdditionalHeaders = headers
-//        return SessionManager(configuration: conf)
-//    }()
-    
-    
-
     
 }
 

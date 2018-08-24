@@ -86,7 +86,7 @@ public class HttpStatusView: UIControl {
         self.buildLayout()
     }
     func buildLayout(){
-        self.backgroundColor = _ARGB(0xeaeaea, a: 0.8)
+        self.backgroundColor = _ARGB(0xeaeaea, a: 1)
         self.addSubview(self.logoImageView)
         self.addSubview(self.messageLabel)
         self.addSubview(self.serverMessageLabel)
