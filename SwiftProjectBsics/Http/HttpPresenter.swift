@@ -171,6 +171,7 @@ extension HttpPresenter{
         self.statusView.remove()
     }
     public func didFail(response :Any?, statusCode :Int, error :Error?){
+        self.requestFailed?(false, statusCode, error?.localizedDescription ?? "", error ?? "")
         if statusCode == -999 {
             self.statusView.remove()
             return
