@@ -58,8 +58,8 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
         return header!
     }()
     
-    open lazy var loadMoreFooter: MJRefreshBackNormalFooter = {
-        let header = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadMoreTableHeaderDidTriggerRefresh))
+    open lazy var loadMoreFooter: MJRefreshAutoNormalFooter = {
+        let header = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadMoreTableHeaderDidTriggerRefresh))
         return header!
     }()
     
@@ -184,7 +184,7 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
         }
         self.reloadData()
         self.checkViewTop()
-        self.httpStatusView.show(inView: self, mode: .error, msg: "请求失败了！点击空白处刷新页面", note: error.debugDescription)
+        self.httpStatusView.show(inView: self, mode: .error, msg: "请求失败了！点击空白处刷新页面", note: "")
     }
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return dataItems.count
