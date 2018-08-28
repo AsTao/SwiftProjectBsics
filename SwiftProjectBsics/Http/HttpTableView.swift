@@ -32,17 +32,21 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
     
     public var ignoreHeaderViewHeightForStatusView :Bool = false{
         didSet{
-            guard let hView = self.tableHeaderView else {return}
-            if ignoreHeaderViewHeightForStatusView {
-                self.httpStatusView.ignoreHeight = hView.height
-            }else{
-                self.httpStatusView.ignoreHeight = 0
-            }
+           self.checkViewTop()
+        }
+    }
+    public func checkViewTop(){
+        guard let hView = self.tableHeaderView else {return}
+        if ignoreHeaderViewHeightForStatusView {
+            self.httpStatusView.ignoreHeight = hView.height
+        }else{
+            self.httpStatusView.ignoreHeight = 0
         }
     }
     
     public func beginRefreshing(){
         if self.dataItems.count == 0 {
+            self.checkViewTop()
             self.httpStatusView.show(inView: self, mode: .loading)
         }
         self.refreshTableHeaderDidTriggerRefresh()
@@ -155,6 +159,7 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
         if self.dataItems.count == 0 {
             self.mj_footer = nil
             self.reloadData()
+            self.checkViewTop()
             self.httpStatusView.show(inView: self, mode: .noData, msg: "暂时无数据")
         }else{
             if isLoadPage {
@@ -178,6 +183,7 @@ open class HttpTableView: UITableView,UITableViewDataSource,HttpResponseHandle {
             return
         }
         self.reloadData()
+        self.checkViewTop()
         self.httpStatusView.show(inView: self, mode: .error, msg: "请求失败了！点击空白处刷新页面", note: error.debugDescription)
     }
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
