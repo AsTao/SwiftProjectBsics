@@ -31,7 +31,6 @@ open class BaseViewController : UIViewController {
     }
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
     }
     
     public var navigationTitleColor :UIColor?
@@ -54,9 +53,8 @@ open class BaseViewController : UIViewController {
     override open  var preferredStatusBarStyle: UIStatusBarStyle{
         return .lightContent
     }
-
-     
-
+ 
+    
 }
 
 

@@ -7,24 +7,27 @@
 
 import UIKit
 
-open class BaseNavigationController: UINavigationController {
 
+open class BaseNavigationController: UINavigationController {
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
-        if let image = self.navigationBarBackgroundImage(){
-            self.setNavigationBarImage(image)
-        }else{
-            self.navigationBar.barTintColor = self.navigationBarTintColor()
-        }
     }
-
+    
+    open lazy var customNavigationBar: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: -_SBARH, width: _SW, height: _TOP))
+        view.isUserInteractionEnabled = false
+        self.navigationBar.insertSubview(view, at: 0)
+        return view
+    }()
+    
     public func setNavigationBarImage(_ image :UIImage){
         let leftCapWidth = Int(image.size.width * 0.5)
         let topCapHeight = Int(image.size.height * 0.5)
         let newImage = image.stretchableImage(withLeftCapWidth: leftCapWidth, topCapHeight: topCapHeight)
         self.navigationBar.setBackgroundImage(newImage, for: .top, barMetrics: .default)
     }
-
+    
     override open func pushViewController(_ viewController: UIViewController, animated: Bool) {
         viewController.hidesBottomBarWhenPushed = viewControllers.count > 0
         super.pushViewController(viewController, animated: animated)
@@ -45,11 +48,6 @@ open class BaseNavigationController: UINavigationController {
         return .lightContent
     }
     
-    open func navigationBarTintColor() -> UIColor{
-        return UIColor.lightGray
-    }
-
-    open func navigationBarBackgroundImage() -> UIImage?{
-        return UIImage.libBundleImage("nav_background")
-    }
+    
 }
+

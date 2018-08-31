@@ -10,6 +10,13 @@ import UIKit
 
 extension UIImage {
     
+    public func stretchableImage(_ leftCap :Float = 0.5,_ topCap :Float = 0.5) -> UIImage{
+        let leftCapWidth = Int(self.size.width * 0.5)
+        let topCapHeight = Int(self.size.height * 0.5)
+        let newImage = self.stretchableImage(withLeftCapWidth: leftCapWidth, topCapHeight: topCapHeight)
+        return newImage;
+    }
+    
     public func rotateImage(angle: Double) -> UIImage? {
         if angle.truncatingRemainder(dividingBy: 360) == 0 { return self }
         let imageRect = CGRect(origin: .zero, size: self.size)
