@@ -55,8 +55,12 @@ postfix operator ~~
 postfix public func ~~(i: Int?) -> Int {return i ?? 0}
 postfix public func ~~(i: Int32?) -> Int32 {return i ?? 0}
 postfix public func ~~(i: Int64?) -> Int64 {return i ?? 0}
+postfix public func ~~(i: UInt?) -> UInt {return i ?? 0}
+postfix public func ~~(i: UInt32?) -> UInt32 {return i ?? 0}
+postfix public func ~~(i: UInt64?) -> UInt64 {return i ?? 0}
 postfix public func ~~(i: Bool?) -> Bool {return i ?? false}
 postfix public func ~~(i: CGFloat?) -> CGFloat {return i ?? 0}
+postfix public func ~~(i: Float?) -> Float {return i ?? 0}
 postfix public func ~~(i: Double?) -> Double {return i ?? 0}
 postfix public func ~~(i: String?) -> String {return i ?? ""}
 postfix public func ~~(i: CGColor?) -> CGColor {return i ?? UIColor.white.cgColor}

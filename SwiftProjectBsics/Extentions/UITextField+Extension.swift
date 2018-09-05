@@ -129,3 +129,14 @@ extension UITextField{
         self.setValue(color, forKey: "_placeholderLabel.textColor")
     }
 }
+
+extension UITextField: UITextFieldDelegate{
+    public func autoDoneButton(){
+        self.returnKeyType = .done
+        self.delegate = self
+    }
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        self.resignFirstResponder()
+        return true
+    }
+}
