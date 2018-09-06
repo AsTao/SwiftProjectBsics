@@ -9,7 +9,7 @@ import UIKit
 import MJRefresh
 
 @objc public protocol HttpTableViewDataHandle{
-   @objc func tableView(tableView :HttpTableView, response :[String:Any], page :Int) -> [Any]?
+    @objc func tableView(tableView :HttpTableView, response :[String:Any], page :Int) -> [Any]?
 }
 
 
@@ -27,27 +27,18 @@ open class HttpTableView: UITableView {
     public var isLoadPage :Bool = true
     
     public var httpClient :HttpClient = HttpClient()
-    
     public var httpPageStrategy :HttpStrategy = BaseHttpStrategy()
     
-    public var ignoreHeaderViewHeightForStatusView :Bool = false{
-        didSet{
-           self.checkViewTop()
-        }
-    }
-    public func checkViewTop(){
-        guard let hView = self.tableHeaderView else {return}
+    public var ignoreHeaderViewHeightForStatusView :Bool = false
+    private var ignoreHeaderViewHeight :CGFloat {
         if ignoreHeaderViewHeightForStatusView {
-            self.httpStatusView.ignoreHeight = hView.height
-        }else{
-            self.httpStatusView.ignoreHeight = 0
+            return self.tableHeaderView?.height ?? 0
         }
+        return 0
     }
-    
     public func beginRefreshing(){
         if self.dataItems.count == 0 {
-            self.checkViewTop()
-            self.httpStatusView.show(inView: self, mode: .loading)
+            self.httpStatusView.show(inView: self, mode: .loading, ignoreHeight: ignoreHeaderViewHeight)
         }
         self.refreshTableHeaderDidTriggerRefresh()
     }
@@ -133,10 +124,8 @@ open class HttpTableView: UITableView {
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    lazy var endingView :MJRefreshFooter = {
-        let view = MJRefreshFooter(frame: CGRect(x: 0, y: 0, width: _SW, height: 60))
-        let endingView = HttpEndingView(frame: CGRect(x: 0, y: 0, width: _SW, height: 60))
-        view.addSubview(endingView)
+    lazy var endingView :HttpEndingView = {
+        let view = HttpEndingView(frame: CGRect(x: 0, y: 0, width: self.width, height: 60))
         return view
     }()
 }
@@ -159,14 +148,15 @@ extension HttpTableView: HttpResponseHandle{
         if self.dataItems.count == 0 {
             self.mj_footer = nil
             self.reloadData()
-            self.checkViewTop()
-            self.httpStatusView.show(inView: self, mode: .noData, msg: "暂时无数据")
+            self.httpStatusView.show(inView: self, mode: .noData, msg: "暂时无数据",ignoreHeight: ignoreHeaderViewHeight)
         }else{
             if isLoadPage {
                 if dataCount >= pageSize {
+                    self.tableFooterView = nil
                     self.mj_footer = loadMoreFooter
                 }else{
-                    self.mj_footer = self.endingView
+                    self.mj_footer = nil
+                    self.tableFooterView = self.endingView
                 }
             }
             self.httpStatusView.remove()
@@ -181,8 +171,7 @@ extension HttpTableView: HttpResponseHandle{
             return
         }
         self.reloadData()
-        self.checkViewTop()
-        self.httpStatusView.show(inView: self, mode: .error, msg: "请求失败了！点击空白处刷新页面", note: "")
+        self.httpStatusView.show(inView: self, mode: .error, msg: "请求失败了！点击空白处刷新页面",ignoreHeight: ignoreHeaderViewHeight)
     }
 }
 

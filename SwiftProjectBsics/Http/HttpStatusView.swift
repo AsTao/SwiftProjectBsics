@@ -15,8 +15,6 @@ public enum HttpStatusViewDisplayMode {
 }
 public class HttpStatusView: UIControl {
 
-    public var ignoreHeight :CGFloat = 0
-    
     public var viewMode :HttpStatusViewDisplayMode?{
         didSet{
             guard let mode = viewMode  else {return }
@@ -51,7 +49,7 @@ public class HttpStatusView: UIControl {
             self.serverMessageLabel.height = min(self.height/4, serverMessage.compatibleSizeFont(serverMessageLabel.font, width: self.width - 15).height)
         }
     }
-    public func show(inView view :UIView?, mode :HttpStatusViewDisplayMode, msg :String = "", note :String = "", animate :Bool = true){
+    public func show(inView view :UIView?, mode :HttpStatusViewDisplayMode, msg :String = "", note :String = "", animate :Bool = true, ignoreHeight :CGFloat = 0){
         guard  let sview = view else {return}
         self.message = msg
         self.serverMessage = note

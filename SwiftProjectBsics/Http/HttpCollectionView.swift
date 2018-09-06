@@ -141,7 +141,7 @@ extension HttpCollectionView :HttpResponseHandle{
                 if dataCount >= pageSize {
                     self.mj_footer = loadMoreFooter
                 }else{
-                    self.mj_footer = self.endingView
+                    self.mj_footer = nil
                 }
             }
             self.httpStatusView.remove()
