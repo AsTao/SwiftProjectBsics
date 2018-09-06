@@ -1,22 +1,20 @@
 //
-//  HttpTableView.swift
+//  HttpCollectionView.swift
 //  Alamofire
 //
-//  Created by Tao on 2018/6/20.
+//  Created by Tao on 2018/9/5.
 //
 
 import UIKit
 import MJRefresh
 
-@objc public protocol HttpTableViewDataHandle{
-   @objc func tableView(tableView :HttpTableView, response :[String:Any], page :Int) -> [Any]?
+@objc public protocol HttpCollectionViewDataHandle{
+    @objc func tableView(tableView :HttpCollectionView, response :[String:Any], page :Int) -> [Any]?
 }
 
+open class HttpCollectionView: UICollectionView {
 
-open class HttpTableView: UITableView {
-    
-    public weak var pageDelegate :HttpTableViewDataHandle?
-    
+    public weak var pageDelegate :HttpCollectionViewDataHandle?
     public var dataItems :[Any] = []
     public var cellReuseIdentifier :String = ""
     
@@ -27,42 +25,32 @@ open class HttpTableView: UITableView {
     public var isLoadPage :Bool = true
     
     public var httpClient :HttpClient = HttpClient()
-    
     public var httpPageStrategy :HttpStrategy = BaseHttpStrategy()
-    
-    public var ignoreHeaderViewHeightForStatusView :Bool = false{
-        didSet{
-           self.checkViewTop()
-        }
-    }
-    public func checkViewTop(){
-        guard let hView = self.tableHeaderView else {return}
-        if ignoreHeaderViewHeightForStatusView {
-            self.httpStatusView.ignoreHeight = hView.height
-        }else{
-            self.httpStatusView.ignoreHeight = 0
-        }
-    }
-    
-    public func beginRefreshing(){
-        if self.dataItems.count == 0 {
-            self.checkViewTop()
-            self.httpStatusView.show(inView: self, mode: .loading)
-        }
-        self.refreshTableHeaderDidTriggerRefresh()
-    }
-    
+
     
     open lazy var refreshHeader: MJRefreshNormalHeader = {
         let header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(refreshTableHeaderDidTriggerRefresh))
         return header!
     }()
-    
     open lazy var loadMoreFooter: MJRefreshAutoNormalFooter = {
         let header = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadMoreTableHeaderDidTriggerRefresh))
         return header!
     }()
     
+    public func beginRefreshing(){
+        if self.dataItems.count == 0 {
+            self.httpStatusView.show(inView: self, mode: .loading)
+        }
+        self.refreshTableHeaderDidTriggerRefresh()
+    }
+    open lazy var httpStatusView: HttpStatusView = {
+        let view = HttpStatusView(frame: CGRect(x: 0, y: 0, width: _SW, height: _SH))
+        view.addTarget(self, action: #selector(refreshRequest), for: .touchUpInside)
+        return view
+    }()
+    @objc open func refreshRequest(){
+        self.httpClient.request()
+    }
     private var _page :Int = 0
     @objc func refreshTableHeaderDidTriggerRefresh(){
         self._page = self.beginPage
@@ -87,24 +75,11 @@ open class HttpTableView: UITableView {
         self.httpClient.strategy = httpPageStrategy
         self.httpClient.request()
     }
-    
-    open lazy var httpStatusView: HttpStatusView = {
-        let view = HttpStatusView(frame: CGRect(x: 0, y: 0, width: _SW, height: _SH))
-        view.addTarget(self, action: #selector(refreshRequest), for: .touchUpInside)
-        return view
-    }()
-    
-    @objc open func refreshRequest(){
-        self.httpClient.request()
-    }
-    public init(frame: CGRect) {
-        super.init(frame: frame, style: .plain)
+    public override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(frame: frame, collectionViewLayout: layout)
         config()
     }
-    override public init(frame: CGRect, style: UITableViewStyle) {
-        super.init(frame: frame, style: style)
-        config()
-    }
+    
     override open func awakeFromNib() {
         super.awakeFromNib()
         config()
@@ -140,7 +115,7 @@ open class HttpTableView: UITableView {
         return view
     }()
 }
-extension HttpTableView: HttpResponseHandle{
+extension HttpCollectionView :HttpResponseHandle{
     public func didSuccess(response :[String:Any], statusCode :Int){
         if _page == beginPage {
             self.dataItems.removeAll()
@@ -159,7 +134,7 @@ extension HttpTableView: HttpResponseHandle{
         if self.dataItems.count == 0 {
             self.mj_footer = nil
             self.reloadData()
-            self.checkViewTop()
+ 
             self.httpStatusView.show(inView: self, mode: .noData, msg: "暂时无数据")
         }else{
             if isLoadPage {
@@ -172,8 +147,6 @@ extension HttpTableView: HttpResponseHandle{
             self.httpStatusView.remove()
             self.reloadData()
         }
-        
-        
     }
     public func didFail(response :Any?, statusCode :Int, error :Error?){
         if statusCode == -999 {
@@ -181,41 +154,16 @@ extension HttpTableView: HttpResponseHandle{
             return
         }
         self.reloadData()
-        self.checkViewTop()
         self.httpStatusView.show(inView: self, mode: .error, msg: "请求失败了！点击空白处刷新页面", note: "")
     }
 }
-
-extension HttpTableView: UITableViewDataSource{
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+extension HttpCollectionView: UICollectionViewDataSource{
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return dataItems.count
     }
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath)
         return cell
     }
 }
-
-
-open class HttpEndingView :UIView{
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.addSubview(imageView)
-    }
-    
-    override open func layoutSubviews() {
-        super.layoutSubviews()
-        self.imageView.frame = CGRect(x: (self.frame.size.width - 105)/2, y: 30, width: 105, height: 24)
-    }
-    lazy var imageView: UIImageView = {
-        let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 105, height: 24))
-        view.image = UIImage.libBundleImage("project_ending")
-        return view
-    }()
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-}
-
 

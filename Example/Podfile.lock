@@ -2,7 +2,7 @@ PODS:
   - Alamofire (4.7.2)
   - CryptoSwift (0.10.0)
   - MJRefresh (3.1.15.3)
-  - SwiftProjectBsics (0.3.0):
+  - SwiftProjectBsics (0.4.1):
     - Alamofire
     - CryptoSwift
     - MJRefresh
@@ -24,7 +24,7 @@ SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
   MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
-  SwiftProjectBsics: 9088e54f0e5ca3bfb2b91845a53b027e17aef959
+  SwiftProjectBsics: 9a1b293de5ecab690d583a93846d6282e1a1b993
 
 PODFILE CHECKSUM: 921da206fb6487b8bfa396b08da8f390ae903565
 
