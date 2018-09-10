@@ -9,7 +9,7 @@ import UIKit
 import MJRefresh
 
 @objc public protocol HttpCollectionViewDataHandle{
-    @objc func tableView(tableView :HttpCollectionView, response :[String:Any], page :Int) -> [Any]?
+    @objc func collectionView(collectionView :HttpCollectionView, response :[String:Any], page :Int) -> [Any]?
 }
 
 open class HttpCollectionView: UICollectionView {
@@ -93,9 +93,13 @@ open class HttpCollectionView: UICollectionView {
         self.refreshHeader.mj_h = 60
         self.loadMoreFooter.mj_h = 60
         self.refreshHeader.lastUpdatedTimeLabel.isHidden = true
-        self.refreshHeader.backgroundColor = self.backgroundColor
-        self.loadMoreFooter.backgroundColor = self.backgroundColor
         self.mj_header = refreshHeader
+    }
+    override open var backgroundColor: UIColor?{
+        didSet{
+            self.refreshHeader.backgroundColor = self.backgroundColor
+            self.loadMoreFooter.backgroundColor = self.backgroundColor
+        }
     }
     public func endRefreshing(){
         self.refreshHeader.endRefreshing()
@@ -122,7 +126,7 @@ extension HttpCollectionView :HttpResponseHandle{
         }
         _page += 1
         var dataCount :Int = 0
-        if let list = self.pageDelegate?.tableView(tableView: self, response: response, page: _page) {
+        if let list = self.pageDelegate?.collectionView(collectionView: self, response: response, page: _page) {
             dataCount = list.count
             self.dataItems.append(contentsOf: list)
         }else{

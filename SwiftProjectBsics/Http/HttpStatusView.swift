@@ -14,7 +14,7 @@ public enum HttpStatusViewDisplayMode {
     case loading
 }
 public class HttpStatusView: UIControl {
-
+    public var customIgnoreHeight :CGFloat = 0
     public var viewMode :HttpStatusViewDisplayMode?{
         didSet{
             guard let mode = viewMode  else {return }
@@ -51,6 +51,10 @@ public class HttpStatusView: UIControl {
     }
     public func show(inView view :UIView?, mode :HttpStatusViewDisplayMode, msg :String = "", note :String = "", animate :Bool = true, ignoreHeight :CGFloat = 0){
         guard  let sview = view else {return}
+        var ih = ignoreHeight
+        if customIgnoreHeight > 0 {
+            ih = customIgnoreHeight
+        }
         self.message = msg
         self.serverMessage = note
         if self.viewMode == mode && self.superview != nil {
@@ -58,7 +62,7 @@ public class HttpStatusView: UIControl {
         }
         sview.endEditing(true)
         self.removeFromSuperview()
-        self.frame = CGRect(x: 0, y: ignoreHeight, width: sview.width, height: sview.height-ignoreHeight)
+        self.frame = CGRect(x: 0, y: ih, width: sview.width, height: sview.height-ih)
         self.viewMode = mode
         sview.addSubview(self)
         self.alpha = 0
