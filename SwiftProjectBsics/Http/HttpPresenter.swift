@@ -145,13 +145,12 @@ extension HttpPresenter{
         self.requestCompleted = {
             [weak self]
             response,statusCode in
-            debugPrint(statusCode)
             self?.statusView.remove()
             completionHandler(response)
         }
         return self
     }
-    
+
     @discardableResult
     open func responseFail(completionHandler: @escaping (Bool,Int,String,Any) -> Void ) -> Self{
         self.requestFailed = {

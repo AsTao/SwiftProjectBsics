@@ -22,6 +22,7 @@ open class HttpTableView: UITableView {
     
     public var beginPage :Int = 0
     public var pageSize :Int = 20
+    public var totalCount :Int = 0
     public var httpPageKey :String = "pageNo"
     public var httpPageSizeKey :String = "pageSize"
     public var isLoadPage :Bool = true

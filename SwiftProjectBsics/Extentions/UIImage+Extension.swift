@@ -10,9 +10,9 @@ import UIKit
 
 extension UIImage {
     
-    public func stretchableImage(_ leftCap :Float = 0.5,_ topCap :Float = 0.5) -> UIImage{
-        let leftCapWidth = Int(self.size.width * 0.5)
-        let topCapHeight = Int(self.size.height * 0.5)
+    public func stretchableImage(_ leftCap :CGFloat = 0.5,_ topCap :CGFloat = 0.5) -> UIImage{
+        let leftCapWidth = Int(self.size.width * leftCap)
+        let topCapHeight = Int(self.size.height * topCap)
         let newImage = self.stretchableImage(withLeftCapWidth: leftCapWidth, topCapHeight: topCapHeight)
         return newImage;
     }
