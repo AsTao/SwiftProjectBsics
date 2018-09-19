@@ -32,15 +32,16 @@ public let isIphone = UIDevice.current.userInterfaceIdiom == .phone
 public let systemVersion = UIDevice.current.systemVersion
 
 
-public let iphone4  = (_SH == 480.0)
-public let iphone5  = (_SH == 568.0)
-public let iphone6  = (_SH == 667.0)
-public let iphone6p = (_SH == 736.0)
-public let iphoneX  = (_SH == 812.0)
+public let iPhone4  = (_SH == 480.0)
+public let iPhone5  = (_SH == 568.0)
+public let iPhone6  = (_SH == 667.0)
+public let iPhonePlus = (_SH == 736.0)
+public let iPhoneX  = (_SH == 812.0)
+public let iPhoneXsMax  = (_SH == 896.0)
 
-public let _TOP :CGFloat = iphoneX ? 88 : 64
-public let _SBARH :CGFloat = iphoneX ? 44 : 20
-public let _BARH :CGFloat = iphoneX ? 83 : 49
+public let _TOP :CGFloat = (iPhoneX || iPhoneXsMax) ? 88 : 64
+public let _SBARH :CGFloat = (iPhoneX || iPhoneXsMax) ? 44 : 20
+public let _BARH :CGFloat = (iPhoneX || iPhoneXsMax) ? 83 : 49
 
 public func _scaleMiddle(_ v: CGFloat) -> CGFloat{return (v * (_SW/375))}
 public func _S(_ format: String, args: CVarArg...) -> String {return String.init(format: format, args)}

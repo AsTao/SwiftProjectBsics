@@ -62,7 +62,7 @@ extension String {
         
         
         let rect = self.boundingRect(with: CGSize(width: width,height: CGFloat(MAXFLOAT)), options:[.usesLineFragmentOrigin,.usesFontLeading],
-                                     attributes:[NSAttributedStringKey.font: font], context: nil);
+                                     attributes:[NSAttributedString.Key.font: font], context: nil);
         
         return CGSize(width: ceil(rect.size.width), height: ceil(rect.size.height))
     }
@@ -75,14 +75,14 @@ extension String {
         paragraphStyle.lineBreakMode = .byCharWrapping
         let rect = self.boundingRect(with: CGSize(width: width,height: CGFloat(MAXFLOAT)),
                                      options: [ NSStringDrawingOptions.truncatesLastVisibleLine , NSStringDrawingOptions.usesLineFragmentOrigin , NSStringDrawingOptions.usesFontLeading],
-                                     attributes:[NSAttributedStringKey.font: font,NSAttributedStringKey.paragraphStyle: paragraphStyle], context: nil)
+                                     attributes:[NSAttributedString.Key.font: font,NSAttributedString.Key.paragraphStyle: paragraphStyle], context: nil)
         return CGSize(width: ceil(rect.size.width), height: ceil(rect.size.height))
     }
     
     public func compatibleSizeFont( _ font: UIFont, width: CGFloat) -> CGSize{
         
-        let rect = self.boundingRect(with: CGSize(width: width,height: CGFloat(MAXFLOAT)), options: [ NSStringDrawingOptions.truncatesLastVisibleLine , NSStringDrawingOptions.usesLineFragmentOrigin , NSStringDrawingOptions.usesFontLeading], attributes:[NSAttributedStringKey.font: font,
-                                                                                                                                                                                                                                                             NSAttributedStringKey.paragraphStyle: NSParagraphStyle.default], context: nil)
+        let rect = self.boundingRect(with: CGSize(width: width,height: CGFloat(MAXFLOAT)), options: [ NSStringDrawingOptions.truncatesLastVisibleLine , NSStringDrawingOptions.usesLineFragmentOrigin , NSStringDrawingOptions.usesFontLeading], attributes:[NSAttributedString.Key.font: font,
+                                                                                                                                                                                                                                                             NSAttributedString.Key.paragraphStyle: NSParagraphStyle.default], context: nil)
         
         return CGSize(width: ceil(rect.size.width), height: ceil(rect.size.height))
         

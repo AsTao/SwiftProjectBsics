@@ -93,7 +93,7 @@ open class HttpTableView: UITableView {
         super.init(frame: frame, style: .plain)
         config()
     }
-    override public init(frame: CGRect, style: UITableViewStyle) {
+    override public init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         config()
     }

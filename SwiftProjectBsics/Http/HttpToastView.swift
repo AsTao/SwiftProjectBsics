@@ -46,7 +46,7 @@ public class HttpToastView: UIView {
     var content :String = ""{
         didSet{
             let size = content.compatibleSizeFont(titleLabel.font, width: _SW - 40)
-            if UIDeviceOrientationIsLandscape(UIDevice.current.orientation) {
+            if UIDevice.current.orientation.isLandscape {
                 let realHeight = min((size.height + 16), (_SW - 80))
                 self.frame = CGRect(x: 0, y: 0, width:  (size.width + 16), height: (size.height+16))
                 self.center = CGPoint(x: _SH/2, y: (_SW - realHeight - 40))
