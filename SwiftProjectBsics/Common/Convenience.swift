@@ -127,22 +127,28 @@ extension UIView{
     }
 }
 
-public func modelWithJSON<T :Decodable>(data :[String:Any]) -> T?{
+public func modelWithJSON<T :Decodable>(_ json :Any) -> T?{
     var object :T?
     do {
-        let data = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+        var data :Data?
+        if let jsonString = json as? String {
+            data = jsonString.data(using: String.Encoding.utf8)
+        }else if let jsonDic = json as? [String:Any] {
+            data = try JSONSerialization.data(withJSONObject: jsonDic, options: .prettyPrinted)
+        }
+        guard let d = data else{return object}
         let decoder = JSONDecoder()
-        object = try decoder.decode(T.self, from: data)
+        object = try decoder.decode(T.self, from: d)
     }
     catch  {
         debugPrint(error)
     }
     return object
 }
-public func modelArrayWithClass<T :Decodable>(data :[Any]) -> [T]?{
+public func modelArrayWithClass<T :Decodable>(_ json :[Any]) -> [T]?{
     var object :[T]?
     do {
-        let data = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
         let decoder = JSONDecoder()
         object = try decoder.decode([T].self, from: data)
     }
@@ -151,7 +157,6 @@ public func modelArrayWithClass<T :Decodable>(data :[Any]) -> [T]?{
     }
     return object
 }
-
 
 public func modelToJSONString<T :Encodable>(model :T) -> String{
     var object :String = ""
