@@ -16,7 +16,7 @@ public enum HttpStatusViewDisplayMode {
 }
 public class HttpStatusView: UIControl {
     public var customIgnoreHeight :CGFloat = 0
-    public var logoImageTopOffset :CGFloat = 0
+    public var noDataImage :UIImage?
     public var viewMode :HttpStatusViewDisplayMode?{
         didSet{
             guard let mode = viewMode  else {return }
@@ -40,7 +40,7 @@ public class HttpStatusView: UIControl {
                 self.isUserInteractionEnabled = false
                 self.indicatorView.isHidden = true
                 self.indicatorView.stopAnimating()
-                self.logoImageView.image = UIImage.libBundleImage("project_nodata")
+                self.logoImageView.image = noDataImage ?? UIImage.libBundleImage("project_nodata")
             }
         }
     }
@@ -104,7 +104,11 @@ public class HttpStatusView: UIControl {
     override public func layoutSubviews() {
         super.layoutSubviews()
         self.indicatorView.center = CGPoint(x: self.width/2, y: self.height/2 - logoImageView.height)
-        self.logoImageView.center = CGPoint(x: self.width/2, y: self.height/2 - logoImageView.height + logoImageTopOffset)
+        if self.logoImageView.image == nil {
+            self.logoImageView.center = CGPoint(x: self.width/2, y: 20)
+        }else{
+            self.logoImageView.center = CGPoint(x: self.width/2, y: self.height/2 - logoImageView.height)
+        }
         self.messageLabel.frame = CGRect(x: 15, y: logoImageView.bottom + 30 , width: self.width - 30, height: messageLabel.height)
         let offset = AppDelegateInstance.currentViewController!.hidesBottomBarWhenPushed ? 0 : _BARH
         let y = self.height - serverMessageLabel.height - 20 - offset
