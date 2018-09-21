@@ -16,7 +16,7 @@ public enum HttpStatusViewDisplayMode {
 }
 public class HttpStatusView: UIControl {
     public var customIgnoreHeight :CGFloat = 0
-    public var noDataImage :UIImage?
+    public var noDataImage :UIImage? = UIImage.libBundleImage("project_nodata")
     public var viewMode :HttpStatusViewDisplayMode?{
         didSet{
             guard let mode = viewMode  else {return }
@@ -40,7 +40,7 @@ public class HttpStatusView: UIControl {
                 self.isUserInteractionEnabled = false
                 self.indicatorView.isHidden = true
                 self.indicatorView.stopAnimating()
-                self.logoImageView.image = noDataImage ?? UIImage.libBundleImage("project_nodata")
+                self.logoImageView.image = noDataImage
             }
         }
     }
