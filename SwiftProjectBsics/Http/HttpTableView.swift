@@ -30,6 +30,9 @@ open class HttpTableView: UITableView {
     public var httpClient :HttpClient = HttpClient()
     public var httpPageStrategy :HttpStrategy = BaseHttpStrategy()
     
+    public var customMessage :String = ""
+    public var noDataMessage :String = "暂时无数据"
+    
     public var ignoreHeaderViewHeightForStatusView :Bool = false
     private var ignoreHeaderViewHeight :CGFloat {
         if ignoreHeaderViewHeightForStatusView {
@@ -132,6 +135,13 @@ open class HttpTableView: UITableView {
 }
 extension HttpTableView: HttpResponseHandle{
     public func didSuccess(response :[String:Any], statusCode :Int){
+        
+        if statusCode != 200, customMessage.count > 0 {
+            self.httpStatusView.show(inView: self, mode: .custom, msg: customMessage, ignoreHeight: ignoreHeaderViewHeight)
+            self.reloadData()
+            return
+        }
+        
         if _page == beginPage {
             self.dataItems.removeAll()
         }
@@ -149,7 +159,7 @@ extension HttpTableView: HttpResponseHandle{
         if self.dataItems.count == 0 {
             self.mj_footer = nil
             self.reloadData()
-            self.httpStatusView.show(inView: self, mode: .noData, msg: "暂时无数据",ignoreHeight: ignoreHeaderViewHeight)
+            self.httpStatusView.show(inView: self, mode: .noData, msg: noDataMessage, ignoreHeight: ignoreHeaderViewHeight)
         }else{
             if isLoadPage {
                 if dataCount >= pageSize {
@@ -163,8 +173,6 @@ extension HttpTableView: HttpResponseHandle{
             self.httpStatusView.remove()
             self.reloadData()
         }
-        
-        
     }
     public func didFail(response :Any?, statusCode :Int, error :Error?){
         if statusCode == -999 {
