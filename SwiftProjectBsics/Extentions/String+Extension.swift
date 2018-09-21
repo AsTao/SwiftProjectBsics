@@ -71,7 +71,7 @@ extension String {
     public func compatibleSizeWithFont( _ font: UIFont,_ width: CGFloat,_ lineSpacing :CGFloat) -> CGSize{
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .justified
-        paragraphStyle.lineSpacing = 5
+        paragraphStyle.lineSpacing = lineSpacing
         paragraphStyle.lineBreakMode = .byCharWrapping
         let rect = self.boundingRect(with: CGSize(width: width,height: CGFloat(MAXFLOAT)),
                                      options: [ NSStringDrawingOptions.truncatesLastVisibleLine , NSStringDrawingOptions.usesLineFragmentOrigin , NSStringDrawingOptions.usesFontLeading],
