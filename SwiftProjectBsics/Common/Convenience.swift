@@ -31,13 +31,11 @@ public let isIpad = UIDevice.current.userInterfaceIdiom == .pad
 public let isIphone = UIDevice.current.userInterfaceIdiom == .phone
 public let systemVersion = UIDevice.current.systemVersion
 
-
 public let iPhone4  = (_SH == 480.0)
 public let iPhone5  = (_SH == 568.0)
 public let iPhone6  = (_SH == 667.0)
 public let iPhonePlus = (_SH == 736.0)
 public let iPhoneX  = (_SH == 812.0 || _SH == 896.0)
- 
 
 public let _TOP :CGFloat = (iPhoneX) ? 88 : 64
 public let _SBARH :CGFloat = (iPhoneX) ? 44 : 20
