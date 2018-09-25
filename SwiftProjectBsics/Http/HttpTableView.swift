@@ -136,15 +136,16 @@ open class HttpTableView: UITableView {
 extension HttpTableView: HttpResponseHandle{
     public func didSuccess(response :[String:Any], statusCode :Int){
         
-        if statusCode != 200, customMessage.count > 0 {
+        if statusCode != 200, customMessage.count > 0, dataItems.count == 0 {
             self.httpStatusView.show(inView: self, mode: .custom, msg: customMessage, ignoreHeight: ignoreHeaderViewHeight)
             self.reloadData()
             return
         }
-        
+    
         if _page == beginPage {
             self.dataItems.removeAll()
         }
+        
         _page += 1
         var dataCount :Int = 0
         if let list = self.pageDelegate?.tableView(tableView: self, response: response, page: _page) {
