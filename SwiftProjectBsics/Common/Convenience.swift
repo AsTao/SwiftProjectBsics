@@ -39,9 +39,9 @@ public let iPhonePlus = (_SH == 736.0)
 public let iPhoneX  = (_SH == 812.0 || _SH == 896.0)
  
 
-public let _TOP :CGFloat = (iPhoneX || iPhoneXsMax) ? 88 : 64
-public let _SBARH :CGFloat = (iPhoneX || iPhoneXsMax) ? 44 : 20
-public let _BARH :CGFloat = (iPhoneX || iPhoneXsMax) ? 83 : 49
+public let _TOP :CGFloat = (iPhoneX) ? 88 : 64
+public let _SBARH :CGFloat = (iPhoneX) ? 44 : 20
+public let _BARH :CGFloat = (iPhoneX) ? 83 : 49
 
 public func _scaleMiddle(_ v: CGFloat) -> CGFloat{return (v * (_SW/375))}
 public func _S(_ format: String, args: CVarArg...) -> String {return String.init(format: format, args)}
