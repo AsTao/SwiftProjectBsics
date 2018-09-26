@@ -10,6 +10,8 @@ import Alamofire
 
 public protocol HttpStrategy{
     var url :String {get set}
+    var host :String {get set}
+    var path :String {get set}
     var parameters :[String: Any] {get set}
     var method :HTTPMethod {get set}
     var headers :[String: String] {get set}
@@ -18,6 +20,12 @@ public protocol HttpStrategy{
 
 public class BaseHttpStrategy :NSObject,HttpStrategy{
     public var url: String = ""
+    public var host: String = AppConfig.shared.server_url
+    public var path: String = ""{
+        didSet{
+            self.url = host + path
+        }
+    }
     public var parameters: [String : Any] = [:]
     public var method: HTTPMethod = .post
     public var headers: [String : String] = SessionManager.defaultHTTPHeaders
@@ -47,9 +55,8 @@ open class HttpClient: NSObject {
     open func request(){
         guard let s = strategy else {return;}
         self.dataRequest?.cancel()
-        let url = AppConfig.assembleServerUrl(url: s.url)
-        debugPrint(url)
-        self.dataRequest = manage.request(url, method: s.method, parameters: s.parameters, encoding: s.encoding, headers: s.headers).responseJSON{ response in
+        debugPrint(s.url)
+        self.dataRequest = manage.request(s.url, method: s.method, parameters: s.parameters, encoding: s.encoding, headers: s.headers).responseJSON{ response in
             if let res = response.response {
                 if AppConfig.shared.unifyProcessingFailed!(res.statusCode,response.result.value) {
                     if response.result.isSuccess , let value = response.result.value as? [String:Any] {
@@ -61,7 +68,7 @@ open class HttpClient: NSObject {
                     self.responseHandle?.didFail(response: response.result.value, statusCode: -999, error: response.error)
                 }
             }else{
-                debugPrint("request fail =\(url)")
+                debugPrint("request fail =\(s.url)")
                 let err = response.error as NSError?
                 self.responseHandle?.didFail(response: response.result.value, statusCode: err?.code ?? 0, error: response.error)
             }

@@ -106,7 +106,7 @@ extension HttpPresenter{
         if self.mode != .sil, self.viewController != nil {
             self.statusView.show(inView:self.viewController?.view, mode: .loading)
         }
-        self.httpClient.strategy?.url = url
+        self.httpClient.strategy?.path = url
         self.httpClient.strategy?.parameters = parameters
         self.httpClient.strategy?.method = method
         for key in AppConfig.shared.sign.keys{

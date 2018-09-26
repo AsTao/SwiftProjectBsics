@@ -34,6 +34,7 @@ public class AppConfig: NSObject {
     
     public var sign :[String:String] = [:]
     public var server_url :String = ""
+    public var server_usl_url :String = ""
     public var server_file_url :String = ""
     
     public var navigationTitleColor :UIColor = UIColor.white
@@ -73,13 +74,7 @@ public class AppConfig: NSObject {
         }
         networkReachabilityManager?.startListening()
     }
-    
-    public class func assembleServerUrl(url :String) -> String {
-        return AppConfig.shared.server_url + url
-    }
-    public class func assembleServerFileUrl(url :String) -> String {
-        return AppConfig.shared.server_file_url + url
-    }
+
 }
 
 extension AppConfig{
