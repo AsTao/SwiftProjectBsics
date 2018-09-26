@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SwiftProjectBsics'
-  s.version          = '0.5.7'
+  s.version          = '0.5.8'
   s.summary          = 'A short description of SwiftProjectBsics.'
 
 # This description is used to generate tags and improve search results.
@@ -36,7 +36,7 @@ TODO: Add long description of the pod here.
   s.dependency 'Alamofire'
   s.dependency 'CryptoSwift'
   s.dependency 'MJRefresh'
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.1' }# 'SWIFT_INCLUDE_PATHS' => '${SRCROOT}/../../SwiftProjectBsics/IPhoneos'
-  s.swift_version = '4.1'
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.2' }# 'SWIFT_INCLUDE_PATHS' => '${SRCROOT}/../../SwiftProjectBsics/IPhoneos'
+  s.swift_version = '4.2'
 
 end
