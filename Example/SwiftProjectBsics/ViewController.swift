@@ -11,9 +11,15 @@ import SwiftProjectBsics
 
 class ViewController: UIViewController {
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        
+        let presenter = LoginPresenter()
+        presenter.login()
+        
+        
         
        let client = HttpTableView(frame: CGRect.zero)
         

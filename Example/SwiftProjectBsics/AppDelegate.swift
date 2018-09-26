@@ -15,12 +15,14 @@ class AppDelegate: BaseAppDelegate {
 
     //var window: UIWindow?
 
+    
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         AppConfig.shared.startNetworkListening()
 
-        
+        AppConfig.server_url = "http://"
         
         return true
     }

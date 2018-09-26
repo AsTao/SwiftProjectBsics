@@ -15,9 +15,14 @@ public enum NetworkStatus {
     case wwan
 }
 
+
 public typealias GlobalFailedRequestCallback = (Int,Any?) -> Bool
 public class AppConfig: NSObject {
     
+    public static var server_url :String = ""
+    public static var server_usl_url :String = ""
+    public static var server_file_url :String = ""
+  
     public static let shared : AppConfig = {
         let instance = AppConfig()
         instance.ini()
@@ -33,9 +38,6 @@ public class AppConfig: NSObject {
     public var reachabilityStatus :NetworkStatus = .unknown
     
     public var sign :[String:String] = [:]
-    public var server_url :String = ""
-    public var server_usl_url :String = ""
-    public var server_file_url :String = ""
     
     public var navigationTitleColor :UIColor = UIColor.white
     

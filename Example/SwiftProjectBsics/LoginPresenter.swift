@@ -13,14 +13,14 @@ class LoginPresenter: HttpPresenter {
 
     
     func login(){
-        AppConfig.shared.server_url = "http://39.108.9.243:8081"
-        self.request(url: "/member/login/account", parameters: ["mobileNo":"18005007063","password":"1234567".md5()]).responseObject { (response: HttpDataResponse<ObjectModel>) in
-                
-                print(response.data?.mobileNo)
-                
-                
-                
-        }
+       // server_url = "http://39.108.9.243:8081"
+//        self.request(url: "/member/login/account", parameters: ["mobileNo":"18005007063","password":"1234567".md5()]).responseObject { (response: HttpDataResponse<ObjectModel>) in
+//
+//                print(response.data?.mobileNo)
+//                
+//
+//
+//        }
 
     }
     

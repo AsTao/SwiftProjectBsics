@@ -20,7 +20,7 @@ public protocol HttpStrategy{
 
 public class BaseHttpStrategy :NSObject,HttpStrategy{
     public var url: String = ""
-    public var host: String = AppConfig.shared.server_url
+    public var host: String = AppConfig.server_url
     public var path: String = ""{
         didSet{
             self.url = host + path
