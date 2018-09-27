@@ -80,6 +80,7 @@ public class HttpStatusView: UIControl {
         }else{
             self.alpha = 1
         }
+        self.setNeedsLayout()
     }
     public func remove(){
         self.indicatorView.stopAnimating()
