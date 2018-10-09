@@ -9,6 +9,14 @@
 import UIKit
 
 extension Double{
+    
+    public var timeDurationString :String {
+        let minute = self / 60
+        let second = self.truncatingRemainder(dividingBy: 60)
+        let string = String.init(format: "%d分%d秒", minute, second)
+        return string
+    }
+    
     public var videoTimeString :String {
         let hour = self / 60 / 60
         let minute = (self - hour * 60 * 60) / 60

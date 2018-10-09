@@ -76,16 +76,15 @@ public class AppConfig: NSObject {
         }
         networkReachabilityManager?.startListening()
     }
-
 }
 
 extension AppConfig{
     
     private func getUuid() -> String{
         let bundleID = getBundleID()
-        if let uuid = self.keychainValueForKey(service: bundleID, key: .UUID)  {return uuid}
+        if let uuid = self.keychainValueForKey(service: bundleID, key: SwiftKeychainKeyName.UUID.rawValue)  {return uuid}
         if let uuidString = UIDevice.current.identifierForVendor?.uuidString{
-            self.setKeychainValue(value: uuidString, service: bundleID, forKey: .UUID)
+            self.setKeychainValue(value: uuidString, service: bundleID, forKey: SwiftKeychainKeyName.UUID.rawValue)
             return uuidString
         }
         return ""
@@ -107,14 +106,14 @@ extension AppConfig{
     private enum SwiftKeychainKeyName: String {
         case UUID = "UUID"
     }
-    private func keychainValueForKey(service :String, key : SwiftKeychainKeyName) -> String? {
-        let item = KeychainPasswordItem(service: service, account: key.rawValue)
+    public func keychainValueForKey(service :String, key : String) -> String? {
+        let item = KeychainPasswordItem(service: service, account: key)
         let value = try? item.readPassword()
         return value
     }
     @discardableResult
-    private func setKeychainValue(value: String, service :String, forKey: SwiftKeychainKeyName) -> Bool {
-        let item = KeychainPasswordItem(service: service, account: forKey.rawValue)
+    public func setKeychainValue(value: String, service :String, forKey: String) -> Bool {
+        let item = KeychainPasswordItem(service: service, account: forKey)
         var success = true
         do {
             try item.savePassword(value)
