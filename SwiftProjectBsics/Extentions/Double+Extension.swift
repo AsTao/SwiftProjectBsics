@@ -8,15 +8,22 @@
 
 import UIKit
 
-extension Double{
-    
+extension Int{
     public var timeDurationString :String {
-        let minute = self / 60
-        let second = self.truncatingRemainder(dividingBy: 60)
+        if self < 61 {
+            return String.init(format: "%d秒", self)
+        }
+        let minute :Int = self / 60
+        let second :Int = self % 60
         let string = String.init(format: "%d分%d秒", minute, second)
         return string
     }
-    
+}
+
+
+
+extension Double{
+        
     public var videoTimeString :String {
         let hour = self / 60 / 60
         let minute = (self - hour * 60 * 60) / 60
@@ -45,7 +52,6 @@ extension Double{
         }
     }
     
-    
     public var yearMonthDay :String{
        return dateFormat(format: "yyyy-MM-dd")
     }
@@ -60,8 +66,4 @@ extension Double{
         let time = Date(timeIntervalSince1970: self)
         return formatter.string(from: time)
     }
-
-    
-    
-    
 }
