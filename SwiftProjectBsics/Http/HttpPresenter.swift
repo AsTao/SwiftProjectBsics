@@ -152,14 +152,17 @@ extension HttpPresenter{
     }
 
     @discardableResult
-    open func responseFail(completionHandler: @escaping (Bool,Int,String,Any) -> Void ) -> Self{
+    open func responseFail(completionHandler: ((Bool,Int,String,Any) -> Void)? ) -> Self{
         self.requestFailed = {
-         //   [weak self]
+            [weak self]
             success,code,message,response in
-//            if code != 200 ,self?.mode != .sil, message.count > 0 {
-//                ToastViewMessage(message)
-//            }
-            completionHandler(success,code,message,response)
+            if let handler = completionHandler {
+                handler(success,code,message,response)
+            }else{
+                if code != 200 ,self?.mode != .sil, message.count > 0 {
+                    ToastViewMessage(message)
+                }
+            }
         }
         return self
     }
