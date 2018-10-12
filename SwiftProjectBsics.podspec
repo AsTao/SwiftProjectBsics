@@ -4,11 +4,11 @@
 #
 # Any lines starting with a # are optional, but their use is encouraged
 # To learn more about a Podspec see https://guides.cocoapods.org/syntax/podspec.html
-#
+#B
 
 Pod::Spec.new do |s|
   s.name             = 'SwiftProjectBsics'
-  s.version          = '0.6.2'
+  s.version          = '0.6.3'
   s.summary          = 'A short description of SwiftProjectBsics.'
 
 # This description is used to generate tags and improve search results.

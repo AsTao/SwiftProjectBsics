@@ -97,7 +97,7 @@ open class HttpPresenter: BasePresenter,HttpResponseHandle {
     @objc open func refreshRequest(){
         self.httpClient.request()
     }
-
+    
 }
 
 extension HttpPresenter{
@@ -134,7 +134,13 @@ extension HttpPresenter{
                 completionHandler(model)
             }
             if let dic = self?.requestResponseDecoder.responseFailDecoding(httpCode: statusCode, response: response){
-                self?.requestFailed?(dic.0,dic.1,dic.2,dic.3)
+                if let handler = self?.requestFailed {
+                    handler(dic.0,dic.1,dic.2,dic.3)
+                }else{
+                    if self?.mode != .sil, dic.2.count > 0 {
+                        ToastViewMessage(dic.2)
+                    }
+                }
             }
         }
         return self
@@ -150,19 +156,13 @@ extension HttpPresenter{
         }
         return self
     }
-
+    
     @discardableResult
     open func responseFail(completionHandler: ((Bool,Int,String,Any) -> Void)? ) -> Self{
         self.requestFailed = {
             [weak self]
             success,code,message,response in
-            if let handler = completionHandler {
-                handler(success,code,message,response)
-            }else{
-                if code != 200 ,self?.mode != .sil, message.count > 0 {
-                    ToastViewMessage(message)
-                }
-            }
+            completionHandler?(success,code,message,response)
         }
         return self
     }
@@ -189,7 +189,7 @@ extension HttpPresenter{
         }
     }
     
-
-
+    
+    
 }
 
