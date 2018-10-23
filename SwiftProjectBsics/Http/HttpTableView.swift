@@ -188,10 +188,10 @@ extension HttpTableView: HttpResponseHandle{
 }
 
 extension HttpTableView: UITableViewDataSource{
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return dataItems.count
     }
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         return cell
     }
