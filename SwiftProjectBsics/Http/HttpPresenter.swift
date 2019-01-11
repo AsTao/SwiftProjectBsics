@@ -20,7 +20,7 @@ public protocol RequestResponseDecoder {
     var otherDataKeys :[String] {get set}
     var httpCodeRange :CountableClosedRange<Int> {get set}
     var originalModel :Any? {get set}
-    func responseDecoding<T :Decodable>(httpCode :Int,response :[String:Any], completionHandler: @escaping (HttpDataResponse<T>) -> Void)
+    func responseDecoding<T :Decodable>(httpCode :Int,response :[String:Any], completionHandler: @escaping (HttpDataResponse<T>) -> Void) -> Bool
 }
 
 open class DefaultRequestResponseDecoder :RequestResponseDecoder{
@@ -29,7 +29,7 @@ open class DefaultRequestResponseDecoder :RequestResponseDecoder{
     public var httpCodeRange: CountableClosedRange<Int> = 200...299
     public var originalModel :Any?
     
-    open func responseDecoding<T :Decodable>(httpCode :Int,response :[String:Any], completionHandler: @escaping (HttpDataResponse<T>) -> Void){
+    open func responseDecoding<T :Decodable>(httpCode :Int,response :[String:Any], completionHandler: @escaping (HttpDataResponse<T>) -> Void) -> Bool{
         var object :T?
         let responseData = response[dataKey]
         if !(responseData is NSNull) {
@@ -42,7 +42,7 @@ open class DefaultRequestResponseDecoder :RequestResponseDecoder{
                 debugPrint(error)
             }
         }
-        guard object != nil else {return}
+        guard object != nil else {return false}
         var dic :[String:Any] = [:]
         otherDataKeys.forEach { key in
             if let v = response[key]{dic[key] = v}
@@ -50,6 +50,7 @@ open class DefaultRequestResponseDecoder :RequestResponseDecoder{
         let model = HttpDataResponse<T>(data: object, statusCode: httpCode, otherData: dic)
         self.originalModel = model
         completionHandler(model)
+        return true
     }
     
     open func responseFailDecoding(httpCode :Int,response :[String:Any]) -> (Bool,Int,String,Any){
@@ -130,15 +131,17 @@ extension HttpPresenter{
             [weak self]
             response,statusCode in
             
-            self?.requestResponseDecoder.responseDecoding(httpCode: statusCode, response: response) { (model :HttpDataResponse<T>) in
+            let decodeingSuccess = self?.requestResponseDecoder.responseDecoding(httpCode: statusCode, response: response) { (model :HttpDataResponse<T>) in
                 completionHandler(model)
-            }
-            if let dic = self?.requestResponseDecoder.responseFailDecoding(httpCode: statusCode, response: response){
-                if let handler = self?.requestFailed {
-                    handler(dic.0,dic.1,dic.2,dic.3)
-                }else{
-                    if self?.mode != .sil, dic.2.count > 0 {
-                        ToastViewMessage(dic.2)
+                } ?? false
+            if decodeingSuccess == false {
+                if let dic = self?.requestResponseDecoder.responseFailDecoding(httpCode: statusCode, response: response){
+                    if let handler = self?.requestFailed {
+                        handler(dic.0,dic.1,dic.2,dic.3)
+                    }else{
+                        if self?.mode != .sil, dic.2.count > 0 {
+                            ToastViewMessage(dic.2)
+                        }
                     }
                 }
             }
@@ -160,7 +163,6 @@ extension HttpPresenter{
     @discardableResult
     open func responseFail(completionHandler: ((Bool,Int,String,Any) -> Void)? ) -> Self{
         self.requestFailed = {
-            [weak self]
             success,code,message,response in
             completionHandler?(success,code,message,response)
         }

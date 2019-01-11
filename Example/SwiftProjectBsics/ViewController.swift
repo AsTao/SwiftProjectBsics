@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         
         
         
-       let client = HttpTableView(frame: CGRect.zero)
+     //  let client = HttpTableView(frame: CGRect.zero)
         
     }
 
