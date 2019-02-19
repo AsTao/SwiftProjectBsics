@@ -32,7 +32,7 @@ public class BaseHttpStrategy :NSObject,HttpStrategy{
     public var encoding : ParameterEncoding = URLEncoding.default
 }
 
-public protocol HttpResponseHandle{
+public protocol HttpResponseHandle :class{
     func didSuccess(response :[String:Any], statusCode :Int)
     func didFail(response :Any?, statusCode :Int, error :Error?)
     
@@ -41,7 +41,7 @@ public protocol HttpResponseHandle{
 open class HttpClient: NSObject {
 
     public var strategy :HttpStrategy?
-    public var responseHandle :HttpResponseHandle?
+    public weak var responseHandle :HttpResponseHandle?
     private var dataRequest :DataRequest?
     
     static let sharedSessionManager: Alamofire.SessionManager = {

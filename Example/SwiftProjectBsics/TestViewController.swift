@@ -12,6 +12,10 @@ import SwiftProjectBsics
 class TestViewController: UIViewController {
 
    // @IBOutlet weak var testTableView: HttpTableView!
+    
+    let httpPresenter :LoginPresenter = LoginPresenter()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
       //  testTableView.
@@ -20,6 +24,15 @@ class TestViewController: UIViewController {
       //  let model : ObjectModel? = modelWithJSON(data: ["":""])
         
         
+    }
+    
+    
+    
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.httpPresenter.login()
+
     }
 
     override func didReceiveMemoryWarning() {

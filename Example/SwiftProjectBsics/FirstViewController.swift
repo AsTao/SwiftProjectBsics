@@ -39,6 +39,9 @@ class FirstViewController: HttpViewController<LoginPresenter> {
 
     @IBAction func testAction(_ sender: Any) {
     //    ToastViewMessage("谁离开多久啊拉开绝世独立看")
+        
+       // self.httpPresenter.login()
+        
     }
     @IBAction func test2Action(_ sender: Any) {
       //  ToastViewEditMessage("手机电话卡还是看见的")

@@ -11,25 +11,36 @@ import SwiftProjectBsics
 
 class LoginPresenter: HttpPresenter {
 
+    deinit {
+        print("login presenter release")
+    }
     
     func login(){
-       // server_url = "http://39.108.9.243:8081"
-//        self.request(url: "/member/login/account", parameters: ["mobileNo":"18005007063","password":"1234567".md5()]).responseObject { (response: HttpDataResponse<ObjectModel>) in
-//
-//                print(response.data?.mobileNo)
-//                
-//
-//
-//        }
+      
+        self.request(url: "/member/login/account", parameters: ["mobileNo":"18005007063","password":"1234567".md5()]).responseObject {
+            [weak self]
+            (response: HttpDataResponse<ObjectModel>) in
+
+             //  print(response.data?.mobileNo)
+            
+
+            self?.testLeak()
+            }.responseFail {
+                [weak self]
+                (a, b, c, d) in
+                 self?.testLeak()
+        }
 
     }
     
-    
-}
-
-
-extension HttpPresenter{
-    func unifyProcessingFailed(_ statusCode :Int,_ message :String){
-        print("yyyy")
+    func testLeak(){
+      
     }
 }
+
+
+//extension HttpPresenter{
+//    func unifyProcessingFailed(_ statusCode :Int,_ message :String){
+//        print("yyyy")
+//    }
+//}
