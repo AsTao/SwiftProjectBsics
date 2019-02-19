@@ -10,8 +10,6 @@ import UIKit
 
 open class BaseViewController : UIViewController {
 
-    
-    
     override open func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,14 +22,22 @@ open class BaseViewController : UIViewController {
         self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage.libBundleImage("back")
         self.navigationItem.backBarButtonItem = backBarButtonItem;
     }
-
+    
+    internal var viewWillAppearHandel :(() -> Void)?
+    internal var viewWillDisappearHandel :(() -> Void)?
+    
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         AppDelegateInstance.currentViewController = self
+        self.viewWillAppearHandel?()
     }
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.viewWillDisappearHandel?()
     }
+    
+    
+    
     
     public var navigationTitleColor :UIColor?
     public var navtitle :String = ""{

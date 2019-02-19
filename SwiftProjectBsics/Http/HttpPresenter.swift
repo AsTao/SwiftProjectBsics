@@ -67,7 +67,7 @@ open class DefaultRequestResponseDecoder :RequestResponseDecoder{
     }
 }
 
-open class HttpPresenter: BasePresenter,HttpResponseHandle {
+open class HttpPresenter<T :BaseViewController>: BasePresenter<T>,HttpResponseHandle {
     
     public var httpClient :HttpClient = HttpClient()
     public var mode :HttpPresenterMode = .def
@@ -77,10 +77,25 @@ open class HttpPresenter: BasePresenter,HttpResponseHandle {
     
     open var requestResponseDecoder: DefaultRequestResponseDecoder = DefaultRequestResponseDecoder()
     
-    required public init() {
+    public required init() {
         super.init()
         self.httpClient.responseHandle = self
         self.httpClient.strategy = BaseHttpStrategy()
+    }
+        
+    open weak var bindViewController :T? {
+        didSet{
+            bindViewController?.viewWillAppearHandel = {
+                [weak self] in
+                if let vc =  self?.bindViewController {
+                    self?.bindViewController(viewController: vc)
+                }
+            }
+            bindViewController?.viewWillDisappearHandel = {
+                [weak self] in
+                self?.unbind()
+            }
+        }
     }
     
     public var statusView :HttpStatusView{
@@ -119,7 +134,7 @@ extension HttpPresenter{
     @discardableResult
     open func request(strategy :BaseHttpStrategy) -> Self{
         if self.mode != .sil, self.viewController != nil {
-            self.statusView.show(inView:self.bindView, mode: .loading)
+            self.statusView.show(inView:self.viewController?.view, mode: .loading)
         }
         self.httpClient.strategy = strategy
         self.httpClient.request()
@@ -181,7 +196,7 @@ extension HttpPresenter{
             return
         }
         if mode == .def {
-            self.statusView.show(inView: self.bindView, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: "")
+            self.statusView.show(inView:self.viewController?.view, mode: .error, msg: "SORRY~ \n请求失败了！点击空白处刷新页面", note: "")
         }else if mode == .qui {
             self.statusView.remove()
             guard safeString(response).count > 0 else {return}

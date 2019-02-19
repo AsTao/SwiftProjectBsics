@@ -9,11 +9,13 @@
 import UIKit
 import SwiftProjectBsics
 
-class LoginPresenter: HttpPresenter {
+class LoginPresenter: HttpPresenter<FirstViewController> {
 
     deinit {
         print("login presenter release")
     }
+    
+
     
     func login(){
       

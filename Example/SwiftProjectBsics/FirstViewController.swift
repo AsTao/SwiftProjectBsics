@@ -12,16 +12,25 @@ import SwiftProjectBsics
 
 
 
-class FirstViewController: HttpViewController<LoginPresenter> {
+class FirstViewController: BaseViewController {
 
 
     let httpStatusView = HttpStatusView(frame: CGRect(x: 0, y: 0, width: _SW, height: _SH))
     
+    
+    deinit {
+        print("aaa")
+    }
+    
+    
+    var httpPresenter = LoginPresenter()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        self.httpPresenter.bindViewController = self
         
-    
+      //  self.httpPresenter.
         
       //  print(httpPresenter.bindView)
 
@@ -32,7 +41,7 @@ class FirstViewController: HttpViewController<LoginPresenter> {
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        print(self.httpPresenter.viewController)
-//        self.httpPresenter.login()
+        self.httpPresenter.login()
          //print(httpPresenter.bindView)
         //self.httpStatusView.show(inView: self.view, mode: .loading)
     }

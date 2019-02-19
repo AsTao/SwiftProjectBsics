@@ -16,8 +16,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         
-        let presenter = LoginPresenter()
-        presenter.login()
+//        let presenter = LoginPresenter()
+//        presenter.login()
         
         
         

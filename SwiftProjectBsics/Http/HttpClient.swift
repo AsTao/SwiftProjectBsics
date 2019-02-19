@@ -40,9 +40,9 @@ public protocol HttpResponseHandle :class{
 
 open class HttpClient: NSObject {
 
-    public var strategy :HttpStrategy?
-    public weak var responseHandle :HttpResponseHandle?
-    private var dataRequest :DataRequest?
+    public var strategy :HttpStrategy? = nil
+    public weak var responseHandle :HttpResponseHandle? = nil
+    private var dataRequest :DataRequest? = nil
     
     static let sharedSessionManager: Alamofire.SessionManager = {
         let configuration = URLSessionConfiguration.default

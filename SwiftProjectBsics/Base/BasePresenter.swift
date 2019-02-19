@@ -13,45 +13,26 @@ public protocol BasePresenterProtocol {
     func willUnbind()
 }
 
-open class BasePresenter: NSObject,BasePresenterProtocol {
+open class BasePresenter<T :BaseViewController>: NSObject,BasePresenterProtocol {
     
     
     required public override init() {
         super.init()
     }
-    private var _viewController :UIViewController?{
+    private var _viewController :T?{
         didSet{self.didBind()}
     }
-    private var _view :UIView?{
-        didSet{self.didBind()}
-    }
-    public var bindView :UIView{
-        get{
-            if let v = view {
-                return v
-            }
-            if let vc = viewController{
-                return vc.view
-            }
-            return UIView()
-        }
-    }
-    
-    public var view :UIView?{
-        get{return _view}
-    }
-    public var viewController : UIViewController?{
+   
+    public var viewController : T?{
+        set{}
         get{return _viewController}
     }
-    public func bindViewController(viewController :UIViewController){
+    public func bindViewController(viewController :T){
         self._viewController = viewController
     }
-    public func bindView(view :UIView){
-        self._view = view
-    }
+
     public func unbind(){
         self.willUnbind()
-        self._view = nil;
         self._viewController = nil
     }
     open func didBind(){}

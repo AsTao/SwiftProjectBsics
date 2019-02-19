@@ -9,7 +9,7 @@
 import UIKit
 import SwiftProjectBsics
 
-class TestView: BaseView<BasePresenter> {
+class TestView: UIView{
 
     override init(frame: CGRect) {
         super.init(frame: frame)
