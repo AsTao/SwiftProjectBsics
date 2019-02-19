@@ -56,21 +56,23 @@ open class HttpClient: NSObject {
         guard let s = strategy else {return;}
         self.dataRequest?.cancel()
         debugPrint(s.url)
-        self.dataRequest = manage.request(s.url, method: s.method, parameters: s.parameters, encoding: s.encoding, headers: s.headers).responseJSON{ response in
+        self.dataRequest = manage.request(s.url, method: s.method, parameters: s.parameters, encoding: s.encoding, headers: s.headers).responseJSON{
+            [weak self]
+            response in
             if let res = response.response {
                 if AppConfig.shared.unifyProcessingFailed!(res.statusCode,response.result.value) {
                     if response.result.isSuccess , let value = response.result.value as? [String:Any] {
-                        self.responseHandle?.didSuccess(response: value, statusCode: res.statusCode)
+                        self?.responseHandle?.didSuccess(response: value, statusCode: res.statusCode)
                     }else{
-                        self.responseHandle?.didFail(response: response.result.value, statusCode: res.statusCode, error: response.error)
+                        self?.responseHandle?.didFail(response: response.result.value, statusCode: res.statusCode, error: response.error)
                     }
                 }else{
-                    self.responseHandle?.didFail(response: response.result.value, statusCode: -999, error: response.error)
+                    self?.responseHandle?.didFail(response: response.result.value, statusCode: -999, error: response.error)
                 }
             }else{
                 debugPrint("request fail =\(s.url)")
                 let err = response.error as NSError?
-                self.responseHandle?.didFail(response: response.result.value, statusCode: err?.code ?? 0, error: response.error)
+                self?.responseHandle?.didFail(response: response.result.value, statusCode: err?.code ?? 0, error: response.error)
             }
         }
     }
