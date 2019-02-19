@@ -20,7 +20,7 @@ public protocol RequestResponseDecoder {
     var otherDataKeys :[String] {get set}
     var httpCodeRange :CountableClosedRange<Int> {get set}
     var originalModel :Any? {get set}
-    func responseDecoding<T :Decodable>(httpCode :Int,response :[String:Any], completionHandler: @escaping (HttpDataResponse<T>) -> Void) -> Bool
+    func responseDecoding<T :Decodable>(httpCode :Int,response :[String:Any], completionHandler: (HttpDataResponse<T>) -> Void) -> Bool
 }
 
 open class DefaultRequestResponseDecoder :RequestResponseDecoder{
@@ -29,7 +29,7 @@ open class DefaultRequestResponseDecoder :RequestResponseDecoder{
     public var httpCodeRange: CountableClosedRange<Int> = 200...299
     public var originalModel :Any?
     
-    open func responseDecoding<T :Decodable>(httpCode :Int,response :[String:Any], completionHandler: @escaping (HttpDataResponse<T>) -> Void) -> Bool{
+    open func responseDecoding<T :Decodable>(httpCode :Int,response :[String:Any], completionHandler: (HttpDataResponse<T>) -> Void) -> Bool{
         var object :T?
         let responseData = response[dataKey]
         if !(responseData is NSNull) {
