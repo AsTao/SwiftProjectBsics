@@ -24,12 +24,13 @@ class LoginPresenter: HttpPresenter<FirstViewController> {
             (response: HttpDataResponse<ObjectModel>) in
 
              //  print(response.data?.mobileNo)
-            
+               
 
             self?.testLeak()
             }.responseFail {
                 [weak self]
                 (a, b, c, d) in
+                print(self?.viewController)
                  self?.testLeak()
         }
 

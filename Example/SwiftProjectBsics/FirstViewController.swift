@@ -23,13 +23,13 @@ class FirstViewController: BaseViewController {
     }
     
     
-    var httpPresenter = LoginPresenter()
-
+    var ahttpPresenter = LoginPresenter()
+    var bhttpPresenter = LoginPresenter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.httpPresenter.bindViewController = self
-        
+        self.ahttpPresenter.bindViewController = self
+        self.bhttpPresenter.bindViewController = self
       //  self.httpPresenter.
         
       //  print(httpPresenter.bindView)
@@ -41,7 +41,8 @@ class FirstViewController: BaseViewController {
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        print(self.httpPresenter.viewController)
-        self.httpPresenter.login()
+        self.ahttpPresenter.login()
+        self.bhttpPresenter.login()
          //print(httpPresenter.bindView)
         //self.httpStatusView.show(inView: self.view, mode: .loading)
     }

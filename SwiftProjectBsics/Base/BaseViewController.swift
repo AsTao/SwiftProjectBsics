@@ -23,17 +23,21 @@ open class BaseViewController : UIViewController {
         self.navigationItem.backBarButtonItem = backBarButtonItem;
     }
     
-    internal var viewWillAppearHandel :(() -> Void)?
-    internal var viewWillDisappearHandel :(() -> Void)?
+    internal var lifecycleClosures :[((_ show :Bool) -> Void)] = []
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         AppDelegateInstance.currentViewController = self
-        self.viewWillAppearHandel?()
+        for closure in lifecycleClosures {
+            closure(true)
+        }
     }
+    
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.viewWillDisappearHandel?()
+        for closure in lifecycleClosures {
+            closure(false)
+        }
     }
     
     

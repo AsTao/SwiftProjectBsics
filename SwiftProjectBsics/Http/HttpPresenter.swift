@@ -85,16 +85,17 @@ open class HttpPresenter<T :BaseViewController>: BasePresenter<T>,HttpResponseHa
         
     open weak var bindViewController :T? {
         didSet{
-            bindViewController?.viewWillAppearHandel = {
-                [weak self] in
-                if let vc =  self?.bindViewController {
-                    self?.bindViewController(viewController: vc)
+            let closur :((Bool) -> Void) = {
+                [weak self] (show :Bool) in
+                if show {
+                    if let vc =  self?.bindViewController {
+                        self?.bindViewController(viewController: vc)
+                    }
+                }else{
+                    self?.unbind()
                 }
             }
-            bindViewController?.viewWillDisappearHandel = {
-                [weak self] in
-                self?.unbind()
-            }
+            bindViewController?.lifecycleClosures.append(closur)
         }
     }
     
