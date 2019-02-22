@@ -27,7 +27,7 @@ open class BasePresenter<T :BaseViewController>: NSObject,BasePresenterProtocol 
         set{}
         get{return _viewController}
     }
-    public func bindViewController(viewController :T){
+    internal func bindViewController(viewController :T){
         self._viewController = viewController
     }
 

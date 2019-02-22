@@ -9,7 +9,7 @@ import UIKit
 import Alamofire
 
 
-public enum HttpPresenterMode {
+public enum HttpRequestMode {
     case def
     case qui
     case sil
@@ -70,7 +70,7 @@ open class DefaultRequestResponseDecoder :RequestResponseDecoder{
 open class HttpPresenter<T :BaseViewController>: BasePresenter<T>,HttpResponseHandle {
     
     public var httpClient :HttpClient = HttpClient()
-    public var mode :HttpPresenterMode = .def
+    public var mode :HttpRequestMode = .def
     
     private var requestFailed :((Bool,Int,String,Any) -> Void)?
     private var requestCompleted :(([String:Any],Int) -> Void)?
