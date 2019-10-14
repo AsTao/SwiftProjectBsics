@@ -1,31 +1,37 @@
 PODS:
-  - Alamofire (4.8.1)
-  - CryptoSwift (0.14.0)
-  - MJRefresh (3.1.15.7)
-  - SwiftProjectBsics (0.6.9):
+  - Alamofire (4.9.0)
+  - Kingfisher (5.8.3):
+    - Kingfisher/Core (= 5.8.3)
+  - Kingfisher/Core (5.8.3)
+  - MJRefresh (3.2.0)
+  - MMKV (1.0.23)
+  - SwiftProjectBsics (0.1.0):
     - Alamofire
-    - CryptoSwift
+    - Kingfisher
     - MJRefresh
+    - MMKV
 
 DEPENDENCIES:
   - SwiftProjectBsics (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Alamofire
-    - CryptoSwift
+    - Kingfisher
     - MJRefresh
+    - MMKV
 
 EXTERNAL SOURCES:
   SwiftProjectBsics:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
-  CryptoSwift: 35a10419f4dbf0619c13f8c1c180037e115323fa
-  MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
-  SwiftProjectBsics: d09566eda4d113b03677ed4d9f2d1dba9107ee8a
+  Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
+  Kingfisher: b7e4cb65ff24c264bd2a1284b75b974d907afd94
+  MJRefresh: ed450d6eb9d3346a2cb033ab7eb6de090aeef437
+  MMKV: 031ae51aedc0af1b250922f7ed8a6b6ee2f94c4c
+  SwiftProjectBsics: dd053b505dc2327e4db3999417c2d69e26995a00
 
 PODFILE CHECKSUM: 921da206fb6487b8bfa396b08da8f390ae903565
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.3

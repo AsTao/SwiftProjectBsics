@@ -7,22 +7,17 @@
 //
 
 import UIKit
-import SwiftProjectBsics
-import CryptoSwift
+
+
 
 @UIApplicationMain
-class AppDelegate: BaseAppDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    //var window: UIWindow?
-
-    
-    
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        AppConfig.shared.startNetworkListening()
 
-        AppConfig.server_url = "http://"
         
         return true
     }
@@ -33,11 +28,9 @@ class AppDelegate: BaseAppDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        AppConfig.shared.networkReachabilityManager?.stopListening()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-         AppConfig.shared.startNetworkListening()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
