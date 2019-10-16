@@ -30,7 +30,6 @@ open class BaseNavigationController: UINavigationController {
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        sj_maxOffset = 0.15
         navigationBar.tintColor = UIColor.white
         navigationBar.setBackgroundImage(_RGB(0x37ABEB).image, for: .default)
         navigationBar.shadowImage = UIImage()

@@ -29,9 +29,9 @@ extension UITextField{
     }
 
     
-    public func addTextFieldLeftIcon(icon :UIImage?, target: Any? = nil, action: Selector? = nil){
+    public func addTextFieldLeftIcon(icon :UIImage?, target: Any? = nil, action: Selector? = nil, space :CGFloat = 20){
         guard let img = icon else{return}
-        let iconWidth :CGFloat = img.size.width + 20
+        let iconWidth :CGFloat = img.size.width + space
         let view = UIControl(frame: CGRect(x: 0, y: 0, width: iconWidth, height: height))
         let imageView =  UIImageView(frame: CGRect(x: 10, y: 0, width: iconWidth - 20, height: img.size.height))
         imageView.center = CGPoint(x: view.width/2, y: view.height/2)
@@ -45,9 +45,9 @@ extension UITextField{
         view.addTarget(target, action: ac, for: .touchUpInside)
     }
     
-    public func addTextFieldRightIcon(icon :UIImage?, target: Any? = nil, action: Selector? = nil){
+    public func addTextFieldRightIcon(icon :UIImage?, target: Any? = nil, action: Selector? = nil, space :CGFloat = 20){
         guard let img = icon else{return}
-        let iconWidth :CGFloat = img.size.width + 20
+        let iconWidth :CGFloat = img.size.width + space
         let view = UIControl(frame: CGRect(x: 0, y: 0, width: iconWidth, height: height))
         let imageView =  UIImageView(frame: CGRect(x: 10, y: 0, width: iconWidth - 20, height: img.size.height))
         imageView.center = CGPoint(x: view.width/2, y: view.height/2)

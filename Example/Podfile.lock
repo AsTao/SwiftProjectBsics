@@ -5,7 +5,7 @@ PODS:
   - Kingfisher/Core (5.8.3)
   - MJRefresh (3.2.0)
   - MMKV (1.0.23)
-  - SwiftProjectBsics (0.1.0):
+  - SwiftProjectBsics (0.8.1):
     - Alamofire
     - Kingfisher
     - MJRefresh
@@ -30,7 +30,7 @@ SPEC CHECKSUMS:
   Kingfisher: b7e4cb65ff24c264bd2a1284b75b974d907afd94
   MJRefresh: ed450d6eb9d3346a2cb033ab7eb6de090aeef437
   MMKV: 031ae51aedc0af1b250922f7ed8a6b6ee2f94c4c
-  SwiftProjectBsics: dd053b505dc2327e4db3999417c2d69e26995a00
+  SwiftProjectBsics: 795b457c1588435dd7839da1bfe54fe23abc1449
 
 PODFILE CHECKSUM: 921da206fb6487b8bfa396b08da8f390ae903565
 

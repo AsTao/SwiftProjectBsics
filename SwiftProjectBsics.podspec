@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SwiftProjectBsics'
-  s.version          = '0.8.0'
+  s.version          = '0.8.1'
   s.summary          = '公共组件，网络请求，常量，便捷函数，通过Cocoapods集成'
 
 
@@ -20,10 +20,10 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '10.0'
   s.source_files = 'SwiftProjectBsics/Classes/**/*'
   s.frameworks = 'UIKit', 'Foundation' , 'CoreGraphics'
-  s.swift_version = '5.0'
+
   
   s.dependency 'Kingfisher'
-  s.dependency 'Alamofire'
+  s.dependency 'Alamofire' 
   s.dependency 'MJRefresh'
   s.dependency 'MMKV'
 end
