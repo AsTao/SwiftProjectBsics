@@ -33,7 +33,7 @@ extension UITextField{
         guard let img = icon else{return}
         let iconWidth :CGFloat = img.size.width + space
         let view = UIControl(frame: CGRect(x: 0, y: 0, width: iconWidth, height: height))
-        let imageView =  UIImageView(frame: CGRect(x: 10, y: 0, width: iconWidth - 20, height: img.size.height))
+        let imageView =  UIImageView(frame: CGRect(x: space/2, y: 0, width: iconWidth - space, height: img.size.height))
         imageView.center = CGPoint(x: view.width/2, y: view.height/2)
         imageView.image = icon
         imageView.tag = 123
@@ -49,7 +49,7 @@ extension UITextField{
         guard let img = icon else{return}
         let iconWidth :CGFloat = img.size.width + space
         let view = UIControl(frame: CGRect(x: 0, y: 0, width: iconWidth, height: height))
-        let imageView =  UIImageView(frame: CGRect(x: 10, y: 0, width: iconWidth - 20, height: img.size.height))
+        let imageView =  UIImageView(frame: CGRect(x: space/2, y: 0, width: iconWidth - space, height: img.size.height))
         imageView.center = CGPoint(x: view.width/2, y: view.height/2)
         imageView.image = icon
         imageView.tag = 123
