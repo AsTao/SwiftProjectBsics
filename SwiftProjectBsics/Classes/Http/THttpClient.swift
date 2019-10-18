@@ -66,6 +66,7 @@ public class THttpClient {
     public var didSuccess :((THttpResp) -> Void)?
     public var didFailed :((THttpResp) -> Void)?
     
+    @discardableResult
     public func responseData<T :Decodable>(completion :@escaping (T) -> Void) -> THttpClient{
         didSuccess = {
             resp in
@@ -77,6 +78,7 @@ public class THttpClient {
         return self
     }
     
+    @discardableResult
     public func responseList<T :Decodable>(completion :@escaping (T) -> Void) -> THttpClient{
         didSuccess = {
             resp in
@@ -88,6 +90,7 @@ public class THttpClient {
         return self
     }
     
+    @discardableResult
     public func responseResp(completion :@escaping (THttpResp) -> Void) -> THttpClient{
         didSuccess = {
             resp in
