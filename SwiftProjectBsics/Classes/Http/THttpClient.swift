@@ -62,8 +62,9 @@ public class THttpClient {
         THttpClient.globalDataRequests[s.identifier] = dataRequest
     }
     
-
+    
     public var didSuccess :((THttpResp) -> Void)?
+    public var didFailed :((THttpResp) -> Void)?
     
     public func responseData<T :Decodable>(completion :@escaping (T) -> Void){
         didSuccess = {
@@ -82,7 +83,6 @@ public class THttpClient {
             if let object :T =  resp.decodeList() {
                 completion(object)
             }
-        
         }
     }
     
