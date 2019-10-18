@@ -98,6 +98,7 @@ public class THttpClientManager {
             if codes.contains(resp.code) {
                 client.didSuccess?(resp)
             }else{
+                client.didFailed?(resp)
                 ToastViewMessage(resp.msge)
                 NotificationCenter.default.post(name: ThttpClientRequestDidFailNotification, object: nil, userInfo: ["resp":resp])
             }
