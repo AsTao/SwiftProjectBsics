@@ -62,10 +62,12 @@ public class THttpClient {
         THttpClient.globalDataRequests[s.identifier] = dataRequest
     }
     
-
-    public var didSuccess :((THttpResp) -> Void)?
     
-    public func responseData<T :Decodable>(completion :@escaping (T) -> Void){
+    public var didSuccess :((THttpResp) -> Void)?
+    public var didFailed :((THttpResp) -> Void)?
+    
+    @discardableResult
+    public func responseData<T :Decodable>(completion :@escaping (T) -> Void) -> THttpClient{
         didSuccess = {
             resp in
             
@@ -73,18 +75,30 @@ public class THttpClient {
                 completion(object)
             }
         }
+        return self
     }
     
-    public func responseList<T :Decodable>(completion :@escaping (T) -> Void){
+    @discardableResult
+    public func responseList<T :Decodable>(completion :@escaping (T) -> Void) -> THttpClient{
         didSuccess = {
             resp in
             
             if let object :T =  resp.decodeList() {
                 completion(object)
             }
-        
         }
+        return self
     }
+    
+    @discardableResult
+    public func responseResp(completion :@escaping (THttpResp) -> Void) -> THttpClient{
+        didSuccess = {
+            resp in
+            completion(resp)
+        }
+        return self
+    }
+    
     
 
 }

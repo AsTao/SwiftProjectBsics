@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SwiftProjectBsics'
-  s.version          = '0.8.3'
+  s.version          = '0.8.5'
   s.summary          = '公共组件，网络请求，常量，便捷函数，通过Cocoapods集成'
 
 
