@@ -43,10 +43,7 @@ extension String {
         return hash.map { String(format: "%02x", $0) }.joined()
     }
 
-    public static func toString<T :Codable>(model :T) -> String?{
-        guard let data = try? JSONEncoder().encode(model) else{return nil}
-        return String(data: data, encoding: .utf8)
-    }
+
     
     
     public func numberOfChars() -> Int {
@@ -62,7 +59,13 @@ extension String {
         }
         return number
     }
+    
+    public static func toString<T :Codable>(model :T) -> String?{
+        guard let data = try? JSONEncoder().encode(model) else{return nil}
+        return String(data: data, encoding: .utf8)
+    }
 }
+
 
 
 
