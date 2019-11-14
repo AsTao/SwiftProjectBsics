@@ -70,6 +70,8 @@ public class THttpStatusView: UIControl {
     var httpRequestSuccessed :((_ resp :THttpResp) -> Void)?
     
     public static var loadingGif :[UIImage] = []
+    public static var animationDuration :TimeInterval = 1
+    
     public static var images :[THttpDisplayMode:UIImage] = [:]
     
     
@@ -182,8 +184,9 @@ public class THttpStatusView: UIControl {
         return view
     }()
     private lazy var indicatorView: UIImageView = {
-        let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 58, height: 30))
-        view.animationDuration = 1.5
+        let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        view.contentMode = .scaleAspectFit
+        view.animationDuration = THttpStatusView.animationDuration
         view.animationImages = THttpStatusView.loadingGif
         return view
     }()
