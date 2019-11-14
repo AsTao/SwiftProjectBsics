@@ -62,6 +62,13 @@ public class ToastView: UIView {
         content = text
         if superview == nil {
             alpha = 0
+//            return UIApplication.shared.windows.reversed().filter { window -> Bool in
+//                return window.screen == UIScreen.main &&
+//                !window.isHidden && window.alpha > 0 &&
+//                window.windowLevel >= .normal &&
+//                !window.description.hasPrefix("<UIRemoteKeyboardWindow")
+//            
+//            }.first
             let window = UIApplication.shared.windows.count > 1 ? UIApplication.shared.windows.last : UIApplication.shared.keyWindow
             window?.addSubview(self)
             UIView.animate(withDuration: 0.25, animations: {
