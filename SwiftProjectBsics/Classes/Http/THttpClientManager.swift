@@ -44,7 +44,7 @@ public class THttpClientManager {
     }
     
     
-    public class func get<T :Decodable>(_ s :THttpProtocol, didCached :(T) -> Void, dataKey :Bool = true) -> THttpClient {
+    public class func get<T :Decodable>(_ s :THttpProtocol, _ dataKey :Bool = true, didCached :(T) -> Void) -> THttpClient {
         let codes = THttpClientManager.shared.codes
         let cache = THttpClientManager.shared.cache
         let client = THttpClient()
