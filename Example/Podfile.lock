@@ -1,11 +1,11 @@
 PODS:
-  - Alamofire (4.9.0)
-  - Kingfisher (5.8.3):
-    - Kingfisher/Core (= 5.8.3)
-  - Kingfisher/Core (5.8.3)
-  - MJRefresh (3.2.0)
+  - Alamofire (4.9.1)
+  - Kingfisher (5.10.0):
+    - Kingfisher/Core (= 5.10.0)
+  - Kingfisher/Core (5.10.0)
+  - MJRefresh (3.2.2)
   - MMKV (1.0.23)
-  - SwiftProjectBsics (0.8.2):
+  - SwiftProjectBsics (0.8.6):
     - Alamofire
     - Kingfisher
     - MJRefresh
@@ -26,12 +26,12 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
-  Kingfisher: b7e4cb65ff24c264bd2a1284b75b974d907afd94
-  MJRefresh: ed450d6eb9d3346a2cb033ab7eb6de090aeef437
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  Kingfisher: 0bf6eae7c2193f15719915fecb7c2c1c03855f3d
+  MJRefresh: 72a46ecaa2a0feaf48fc5198dff95f25f8bb27c6
   MMKV: 031ae51aedc0af1b250922f7ed8a6b6ee2f94c4c
-  SwiftProjectBsics: 7965ecc05ab378b592a4630af4e55f60917e4a1c
+  SwiftProjectBsics: e2d4ef72be1cc1124434afe5a79ca41a15b6171e
 
 PODFILE CHECKSUM: 921da206fb6487b8bfa396b08da8f390ae903565
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.8.4

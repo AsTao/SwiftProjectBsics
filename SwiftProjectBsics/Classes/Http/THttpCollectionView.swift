@@ -109,7 +109,7 @@ extension THttpCollectionView {
     
     open func request(){
         
-        guard var httpProtocol = makeHttpProtocol?() else{return}
+        guard let httpProtocol = makeHttpProtocol?() else{return}
         
         httpParameters.forEach { (k,v) in
             httpProtocol.parameters[k] = v

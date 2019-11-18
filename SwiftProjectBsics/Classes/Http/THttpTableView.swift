@@ -46,12 +46,12 @@ open class THttpTableView: UITableView {
     
     open lazy var refreshHeader: MJRefreshNormalHeader = {
         let header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(refreshTableHeaderDidTriggerRefresh))
-        return header!
+        return header
     }()
     
     open lazy var loadMoreFooter: MJRefreshAutoNormalFooter = {
         let header = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadMoreTableHeaderDidTriggerRefresh))
-        return header!
+        return header
     }()
     
     public var _page :Int = 0
@@ -115,7 +115,7 @@ open class THttpTableView: UITableView {
         dataSource = self
         refreshHeader.mj_h = 60
         loadMoreFooter.mj_h = 60
-        refreshHeader.lastUpdatedTimeLabel.isHidden = true
+        refreshHeader.lastUpdatedTimeLabel?.isHidden = true
         refreshHeader.backgroundColor = backgroundColor
         loadMoreFooter.backgroundColor = backgroundColor
         mj_header = refreshHeader
