@@ -10,8 +10,9 @@ import Kingfisher
 
 extension UIImageView{
     
-    public func setImage(url: String, radius :CGFloat = 0){
+    public func setImage(url: String, placeholder :UIImage? = nil ,radius :CGFloat = 0){
         contentMode = .scaleAspectFill
+        image = placeholder
         kf.setImage(with: _URL(url)) {
             [weak self] result in
             switch result {
@@ -19,11 +20,10 @@ extension UIImageView{
                 if radius > 0 {
                     self?.drawRectWithRoundedCorner(radius: radius)
                 }
-            default:
-                break
+            case .failure(_):
+                self?.image = placeholder
             }
         }
-        
     }
-    
+
 }

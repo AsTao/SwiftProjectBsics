@@ -37,13 +37,13 @@ extension Double{
     ///距离当前时间 xx-xx xx:xx
     public var distanceNowTime :String{
         let now :Double  = Date().timeIntervalSince1970
-        let offset = Int(now - self)
+        let offset = now - self
         if offset < 60 {
             return "1m ago"
         }else if offset < 3600{
-            return _S("%dm ago", args: offset/60)
+            return String(format: "%.0fm ago", offset/60)
         }else if offset < 86400{
-            return _S("%dh ago", args: offset/3600)
+            return String(format: "%.0fh ago", offset/3600)
         }else{
             let formatter = DateFormatter()
             formatter.dateFormat = "MM-dd HH:mm"
