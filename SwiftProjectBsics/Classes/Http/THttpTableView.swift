@@ -159,7 +159,7 @@ open class THttpTableView: UITableView {
         }else{
             if isLoadPage {
                 if dataCount >= pageSize {
-                    tableFooterView = nil
+                    tableFooterView = UIView()
                     mj_footer = loadMoreFooter
                 }else{
                     mj_footer = nil
