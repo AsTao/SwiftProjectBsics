@@ -10,8 +10,6 @@ import UIKit
 
 open class BaseViewController : UIViewController {
 
-    let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 30))
-    
     override open func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,22 +24,8 @@ open class BaseViewController : UIViewController {
             automaticallyAdjustsScrollViewInsets = false
             return
         }
+        
     }
-    
-    @objc func backButtonAction(){
-        navigationController?.popViewController(animated: true)
-    }
-    
-    func navigationBar(color :UIColor, backImage :UIImage?, barTintColor :UIColor ){
-        guard let bar = navigationController?.navigationBar else {return}
-        bar.backgroundColor = color
-        bar.tintColor = barTintColor
-        backButton.setImage(backImage, for: .normal)
-        bar.setBackgroundImage(color.image, for: .default)
-        bar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:barTintColor,
-                                   NSAttributedString.Key.font:UIFont.systemFont(ofSize: 17)]
-    }
-    
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
