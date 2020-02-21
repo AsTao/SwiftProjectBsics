@@ -18,19 +18,19 @@ public class THttpClient {
     
     public static var globalDataRequests :[String:DataRequest] = [:]
     
-    public static let sharedSessionManager: Alamofire.SessionManager = {
+    public static let sharedSessionManager: Alamofire.Session = {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 10
-        return Alamofire.SessionManager(configuration: configuration)
+        return Alamofire.Session(configuration: configuration)
     }()
     
-    public var manage :SessionManager = THttpClient.sharedSessionManager
+    public var manage :Session = THttpClient.sharedSessionManager
     
     public func request(_ s :THttpProtocol, success :@escaping ((_ resp :THttpResp) -> Void), fail :((_ resp :THttpResp) -> Void)?){
         
         THttpClient.globalDataRequests[s.identifier]?.cancel()
        
-        let dataRequest = manage.request(s.url, method: s.method, parameters: s.parameters, encoding: s.parameterEncoding, headers: s.headers).responseString{
+        let dataRequest = manage.request(s.url, method: s.method, parameters: s.parameters, encoding: s.parameterEncoding, headers: HTTPHeaders(s.headers)).responseString{
             response in
             let statusCode = response.response?.statusCode ?? 0
             if (200...299).contains(statusCode) {

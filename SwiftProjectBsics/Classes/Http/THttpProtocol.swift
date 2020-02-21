@@ -23,7 +23,7 @@ open class THttpProtocol :NSObject{
     
     open var parameters: [String : Any] = [:]
     open var parameterEncoding : ParameterEncoding = URLEncoding.default
-    open var headers: [String : String] = SessionManager.defaultHTTPHeaders
+    open var headers: [String : String] = HTTPHeaders.default.dictionary
  
     public class func makeHttpProtocol( m :[String :Any] = [:], h :[String:String] = [:]) -> THttpProtocol{
         let httpProtocol = THttpProtocol()
