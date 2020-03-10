@@ -29,7 +29,8 @@ public class THttpClient {
     public func request(_ s :THttpProtocol, success :@escaping ((_ resp :THttpResp) -> Void), fail :((_ resp :THttpResp) -> Void)?){
         
         THttpClient.globalDataRequests[s.identifier]?.cancel()
-       
+        TURLHook.shared.urlEventHandel?(s.url)
+        
         let dataRequest = manage.request(s.url, method: s.method, parameters: s.parameters, encoding: s.parameterEncoding, headers: HTTPHeaders(s.headers)).responseString{
             response in
             let statusCode = response.response?.statusCode ?? 0
@@ -98,7 +99,16 @@ public class THttpClient {
         }
         return self
     }
+
+}
+
+class TURLHook: NSObject {
+
+    public static let shared : TURLHook = {
+        let instance = TURLHook()
+        return instance
+    }()
     
-    
+    var urlEventHandel :((_ url :String) -> Void)?
 
 }
